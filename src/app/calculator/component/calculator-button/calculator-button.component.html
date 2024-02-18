@@ -1,0 +1,11 @@
+<div
+  (click)="pressButton(button)"
+  class="flex justify-center items-center w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-400 cursor-pointer transition-all duration-300 ease-in-out"
+  [ngClass]="{
+          'bg-orange-400 dark:bg-orange-300 hover:bg-orange-300 dark:hover:bg-orange-400': button.type === 'function',
+          'bg-gray-300 text-white dark:text-black dark:bg-gray-300': button.action === 'reset',
+}">
+  <span class="text-black dark:text-white">
+    {{ button.label }}
+  </span>
+</div>

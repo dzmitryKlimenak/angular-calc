@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ICalculatorButton,
   ICalculatorButtonAction,
@@ -8,11 +8,11 @@ import {
 
 @Injectable()
 export class CalculatorService {
-  private readonly defaultResult = '0';
+  private readonly defaultResult: string = '0';
 
   private valueSub: BehaviorSubject<string> = new BehaviorSubject<string>(this.defaultResult);
 
-  readonly value$ = this.valueSub.asObservable();
+  readonly value$: Observable<string> = this.valueSub.asObservable();
 
   constructor() {}
 

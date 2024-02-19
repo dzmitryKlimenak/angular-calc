@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IThemeMode } from './theme-switcher.interface';
 import { EThemeMode } from './theme-switcher.enum';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class ThemeSwitcherService {
@@ -9,7 +9,7 @@ export class ThemeSwitcherService {
 
   private themeSub: BehaviorSubject<IThemeMode> = new BehaviorSubject<IThemeMode>(EThemeMode.LIGHT);
 
-  readonly theme$ = this.themeSub.asObservable();
+  readonly theme$: Observable<IThemeMode> = this.themeSub.asObservable();
 
   constructor() {
     this.initTheme();

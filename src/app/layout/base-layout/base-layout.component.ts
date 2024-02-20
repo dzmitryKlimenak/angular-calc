@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './base-layout.component.html',
   styleUrls: ['./base-layout.component.scss'],
 })
-export class BaseLayoutComponent {
-  constructor() {}
-}
+export class BaseLayoutComponent {}

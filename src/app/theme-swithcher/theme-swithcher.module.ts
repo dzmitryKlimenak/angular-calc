@@ -11,4 +11,4 @@ import { FormsModule } from '@angular/forms';
   exports: [ThemeSwitcherComponent],
   providers: [ThemeSwitcherService],
 })
-export class ThemeSwithcherModule {}
+export class ThemeSwitcherModule {}

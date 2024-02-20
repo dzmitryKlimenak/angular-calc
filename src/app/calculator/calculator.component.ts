@@ -9,6 +9,4 @@ import { ICalculatorButton } from './calcalator.interface';
 })
 export class CalculatorComponent {
   buttons: ICalculatorButton[] = CALCULATOR_BUTTONS;
-
-  constructor() {}
 }

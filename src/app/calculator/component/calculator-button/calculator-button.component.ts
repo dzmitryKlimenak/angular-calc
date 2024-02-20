@@ -16,7 +16,7 @@ export class CalculatorButtonComponent {
 
   constructor(private calculatorService: CalculatorService) {}
 
-  pressButton(button: ICalculatorButton) {
+  pressButton(button: ICalculatorButton): void {
     if (button.enabled) {
       this.calculatorService.pressButton(button);
     }

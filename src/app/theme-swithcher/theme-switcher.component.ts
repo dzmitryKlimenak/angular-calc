@@ -18,17 +18,17 @@ export class ThemeSwitcherComponent implements OnInit {
 
   constructor(private renderer: Renderer2, private themeService: ThemeSwitcherService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.bodyCLassHandler(this.theme);
   }
 
-  toggleThemeMode(state: boolean) {
+  public toggleThemeMode(state: boolean): void {
     const selectedTheme = state ? EThemeMode.LIGHT : EThemeMode.DARK;
     this.themeService.setTheme(selectedTheme);
     this.bodyCLassHandler(selectedTheme);
   }
 
-  private bodyCLassHandler(className: IThemeMode) {
+  private bodyCLassHandler(className: IThemeMode): void {
     const bodyEl = document.body;
     if (bodyEl) {
       this.renderer.removeClass(bodyEl, EThemeMode.LIGHT);

@@ -15,16 +15,16 @@ export class ThemeSwitcherService {
     this.initTheme();
   }
 
-  public setTheme(theme: IThemeMode) {
+  public setTheme(theme: IThemeMode): void {
     localStorage.setItem(this.lcThemeKey, theme);
     this.themeSub.next(theme);
   }
 
-  public getTheme() {
+  public getTheme(): IThemeMode {
     return this.themeSub.getValue();
   }
 
-  public initTheme() {
+  public initTheme(): void {
     const theme = localStorage.getItem(this.lcThemeKey) || EThemeMode.LIGHT;
     this.setTheme(theme as IThemeMode);
   }

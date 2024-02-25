@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 export interface ITodoItem {
   id: string;
   title: string;
@@ -8,15 +10,23 @@ export enum ETodoAction {
   ADD = 'ADD',
   REMOVE = 'REMOVE',
   EDIT = 'EDIT',
-  TOGGLE_STATE = 'TOGGLE_STATE',
   REMOVE_ALL = 'REMOVE_ALL',
   SHOW_ALL = 'SHOW_ALL',
 }
 
-export type todoActionType =
+export type TodoActionType =
   | ETodoAction.ADD
   | ETodoAction.REMOVE
   | ETodoAction.EDIT
-  | ETodoAction.TOGGLE_STATE
   | ETodoAction.REMOVE_ALL
   | ETodoAction.SHOW_ALL;
+
+export interface ITodoItemFormgroup {
+  state: FormControl<boolean>;
+  title: FormControl<string>;
+}
+
+export enum ETodoCssClass {
+  ACTIVE = 'active',
+  'COMPLETED' = 'completed',
+}

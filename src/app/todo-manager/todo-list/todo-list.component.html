@@ -1,12 +1,25 @@
-<div class="flex-col w-1/3">
-  <ng-container *ngIf="isTodoHasItems$ | async; else EmptyStateTemplate">
-    <app-todo-item *ngFor="let todo of todoList$ | async" [todoItem]="todo"></app-todo-item>
+<div class="flex-col">
+  <ng-container *ngIf="todoListLength$ | async as todoLength; else EmptyStateTemplate">
+    <button *ngIf="todoLength > loadMoreAmount && !isShowFullList"
+            mat-flat-button
+            class="mb-2 p-1 text-sm border border-blue-600 border-solid text-white bg-blue-500 hover:bg-blue-600"
+            (click)="toggleFullList(true)">Show all: {{ todoLength }}</button>
+    <ng-container *ngFor="let todo of todoList$ | async; trackBy: todoTrack; let i=index">
+      <app-todo-item [todoItem]="todo" [index]="i" *ngIf="i < loadMoreAmount"></app-todo-item>
+      <app-todo-item [todoItem]="todo"  [index]="i" *ngIf="i >= loadMoreAmount && isShowFullList"></app-todo-item>
+    </ng-container>
   </ng-container>
   <ng-template #EmptyStateTemplate>
-    Empty Todo List
+    <h2 class="text-center font-bold text-xl">Empty Todo List</h2>
   </ng-template>
 </div>
+<mat-divider class="my-4"></mat-divider>
 <div>
-  <button mat-flat-button (click)="addItem()">Add one more task</button>
-  <button mat-flat-button (click)="cleanTodoList()">Delete All</button>
+  <button
+    mat-flat-button
+    class="p-1 text-sm border border-green-600 border-solid text-white bg-green-500 hover:bg-green-600 mr-2"
+    (click)="addItem()">Add one more task</button>
+  <button mat-flat-button
+          class="p-1 text-sm border border-red-600 border-solid text-white bg-red-500 hover:bg-red-600"
+          (click)="cleanTodoList()">Delete All</button>
 </div>

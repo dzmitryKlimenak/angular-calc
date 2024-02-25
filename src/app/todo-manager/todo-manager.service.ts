@@ -1,38 +1,37 @@
 import { Injectable } from '@angular/core';
-import { ETodoAction, ITodoItem, todoActionType } from './todo-manager.interface';
-import { BehaviorSubject } from 'rxjs';
+import { ETodoAction, ITodoItem, TodoActionType } from './todo-manager.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class TodoManagerService {
   private readonly defaultTodoTitle: string = 'New todo';
 
+  private readonly todosLocalStorageKey: string = 'todoList';
+
   private todosSub: BehaviorSubject<ITodoItem[]> = new BehaviorSubject<ITodoItem[]>([]);
 
-  public readonly todos$ = this.todosSub.asObservable();
+  public readonly todos$: Observable<ITodoItem[]> = this.todosSub.asObservable();
 
-  constructor() {}
+  constructor() {
+    this.initTodosFromLocalStorage();
+  }
 
-  public todoAction(action: todoActionType, todo?: ITodoItem): void {
+  public todoAction(action: TodoActionType, todo?: ITodoItem): void {
     switch (action) {
       case ETodoAction.ADD:
         this.addTodoItem();
         break;
       case ETodoAction.EDIT:
-        // this.removeTodoItem(todo);
+        this.editTodo(todo);
         break;
       case ETodoAction.REMOVE:
         this.removeTodoItem(todo);
-        break;
-      case ETodoAction.TOGGLE_STATE:
-        // this.toggleTodoItem(todo);
-        break;
-      case ETodoAction.SHOW_ALL:
-        // this.toggleTodoItem(todo);
         break;
       case ETodoAction.REMOVE_ALL:
         this.deleteAllTodoItems();
         break;
     }
+    this.updateTodoLocalStorage();
   }
 
   public getTodos(): ITodoItem[] {
@@ -40,8 +39,15 @@ export class TodoManagerService {
   }
 
   private addTodoItem(): void {
-    const todoItem = this.generateTodoItem();
-    this.todosSub.next([...this.todosSub.getValue(), todoItem]);
+    const todoItem: ITodoItem = this.generateTodoItem();
+    this.todosSub.next([todoItem, ...this.getTodos()]);
+  }
+
+  private editTodo(todoItem: ITodoItem): void {
+    const updatedTodos: ITodoItem[] = this.todosSub
+      .getValue()
+      .map((todo: ITodoItem) => (todo.id === todoItem.id ? { ...todoItem } : todo));
+    this.todosSub.next(updatedTodos);
   }
 
   private deleteAllTodoItems(): void {
@@ -49,7 +55,7 @@ export class TodoManagerService {
   }
 
   private removeTodoItem(todoItem: ITodoItem): void {
-    const updatedTodos = this.todosSub.getValue().filter((todo) => todo.id !== todoItem.id);
+    const updatedTodos: ITodoItem[] = this.getTodos().filter((todo) => todo.id !== todoItem.id);
     this.todosSub.next(updatedTodos);
   }
 
@@ -64,5 +70,21 @@ export class TodoManagerService {
   private generateTodoId(): string {
     //return uniq string length 5;
     return Math.random().toString(36).slice(2, 7);
+  }
+
+  private updateTodoLocalStorage(): void {
+    const todos: ITodoItem[] = this.getTodos();
+
+    if (localStorage.getItem(this.todosLocalStorageKey)) {
+      localStorage.removeItem(this.todosLocalStorageKey);
+    }
+    localStorage.setItem(this.todosLocalStorageKey, JSON.stringify(todos));
+  }
+
+  private initTodosFromLocalStorage(): void {
+    const todos: string = localStorage.getItem(this.todosLocalStorageKey);
+    if (todos) {
+      this.todosSub.next(JSON.parse(todos));
+    }
   }
 }

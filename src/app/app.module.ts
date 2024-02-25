@@ -4,10 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TodoManagerModule } from './todo-manager/todo-manager.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, TodoManagerModule],
+  imports: [BrowserModule, AppRoutingModule, TodoManagerModule, FontAwesomeModule],
   providers: [],
   bootstrap: [AppComponent],
 })

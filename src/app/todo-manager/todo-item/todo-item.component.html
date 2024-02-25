@@ -1,0 +1,11 @@
+<div class="p-4 border-solid border rounded-xl">
+  <div class="flex-row">
+    <h3>{{ todoItem.id }}</h3>
+    <div>{{ todoItem.title }}</div>
+    <div>{{ todoItem.state }}</div>
+  </div>
+  <div>
+    <button  mat-flat-button (click)="removeTodoItem(todoItem)">Delete</button>
+  </div>
+</div>
+

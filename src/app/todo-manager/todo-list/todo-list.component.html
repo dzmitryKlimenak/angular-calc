@@ -1,0 +1,12 @@
+<div class="flex-col w-1/3">
+  <ng-container *ngIf="isTodoHasItems$ | async; else EmptyStateTemplate">
+    <app-todo-item *ngFor="let todo of todoList$ | async" [todoItem]="todo"></app-todo-item>
+  </ng-container>
+  <ng-template #EmptyStateTemplate>
+    Empty Todo List
+  </ng-template>
+</div>
+<div>
+  <button mat-flat-button (click)="addItem()">Add one more task</button>
+  <button mat-flat-button (click)="cleanTodoList()">Delete All</button>
+</div>

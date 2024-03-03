@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { ETodoAction } from './todo-manager.enum';
 
 export interface ITodoItem {
   id: string;
@@ -6,12 +7,8 @@ export interface ITodoItem {
   state: boolean;
 }
 
-export enum ETodoAction {
-  ADD = 'ADD',
-  REMOVE = 'REMOVE',
-  EDIT = 'EDIT',
-  REMOVE_ALL = 'REMOVE_ALL',
-  SHOW_ALL = 'SHOW_ALL',
+export interface ITodoItemFilter {
+  [key: string]: boolean | string;
 }
 
 export type TodoActionType =
@@ -19,14 +16,11 @@ export type TodoActionType =
   | ETodoAction.REMOVE
   | ETodoAction.EDIT
   | ETodoAction.REMOVE_ALL
-  | ETodoAction.SHOW_ALL;
+  | ETodoAction.FILTER
+  | ETodoAction.SHOW_ALL
+  | ETodoAction.BY_ID;
 
 export interface ITodoItemFormgroup {
   state: FormControl<boolean>;
   title: FormControl<string>;
-}
-
-export enum ETodoCssClass {
-  ACTIVE = 'active',
-  'COMPLETED' = 'completed',
 }

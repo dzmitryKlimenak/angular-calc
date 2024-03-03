@@ -1,25 +1,38 @@
 <div class="flex-col">
-  <ng-container *ngIf="todoListLength$ | async as todoLength; else EmptyStateTemplate">
-    <button *ngIf="todoLength > loadMoreAmount && !isShowFullList"
-            mat-flat-button
-            class="mb-2 p-1 text-sm border border-blue-600 border-solid text-white bg-blue-500 hover:bg-blue-600"
-            (click)="toggleFullList(true)">Show all: {{ todoLength }}</button>
+  <div class="flex items-center gap-x-4 text-gray-500 dark:text-green-200">
+    <span>Filter by:</span>
+    <a
+      routerLinkActive="text-green-500 dark:text-orange-400"
+      [routerLink]="['/todos']"
+      [queryParams]="{ state: true }">Completed</a>
+    <a
+      routerLinkActive="text-green-500 dark:text-orange-400"
+      [routerLink]="['/todos']"
+      [queryParams]="{ state: false }">In progress</a>
+    <fa-icon
+      title="Reset filter"
+      class="text-gray-400 dark:text-orange-300 hover:cursor-pointer ml-2"
+      (click)="resetFilter()"
+      [icon]="faEraser"></fa-icon>
+  </div>
+  <ng-container *ngIf="todoListLength$ | async; else EmptyStateTemplate">
     <ng-container *ngFor="let todo of todoList$ | async; trackBy: todoTrack; let i=index">
-      <app-todo-item [todoItem]="todo" [index]="i" *ngIf="i < loadMoreAmount"></app-todo-item>
-      <app-todo-item [todoItem]="todo"  [index]="i" *ngIf="i >= loadMoreAmount && isShowFullList"></app-todo-item>
+      <app-todo-list-item [todoItem]="todo" [index]="i"></app-todo-list-item>
     </ng-container>
   </ng-container>
   <ng-template #EmptyStateTemplate>
-    <h2 class="text-center font-bold text-xl">Empty Todo List</h2>
+    <h2 class="text-center font-bold text-xl text-gray-500 dark:text-green-200">Empty Todo List</h2>
   </ng-template>
 </div>
-<mat-divider class="my-4"></mat-divider>
+<mat-divider class="my-4 text-gray-500 dark:text-green-200"></mat-divider>
 <div>
   <button
     mat-flat-button
+    *ngIf="(todoListLength$ | async) < 5"
     class="p-1 text-sm border border-green-600 border-solid text-white bg-green-500 hover:bg-green-600 mr-2"
     (click)="addItem()">Add one more task</button>
   <button mat-flat-button
           class="p-1 text-sm border border-red-600 border-solid text-white bg-red-500 hover:bg-red-600"
           (click)="cleanTodoList()">Delete All</button>
 </div>
+

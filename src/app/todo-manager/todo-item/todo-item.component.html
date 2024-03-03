@@ -1,36 +1,11 @@
-<div [appTodoState]="todoItem.state" class="flex justify-between items-center p-2 border-solid border rounded-s" [formGroup]="todoFg">
-  <ng-container *ngIf="todoFg">
-    <div class="flex">
-      <span class="mr-1">{{ index }}:</span>
-      <ng-container *ngIf="isEditMode; else TitleTemplate">
-        <input
-          class="border-solid border rounded-lg px-2 py-0"
-          [class.text-red-900]="titleCtrl.invalid"
-          formControlName="title"
-          type="text"
-          placeholder="Title">
-        <fa-icon
-          class="mx-2 hover:cursor-pointer"
-          (click)="saveTitleChanges()"
-          [icon]="faSave"></fa-icon>
-      </ng-container>
-      <ng-template #TitleTemplate>
-        <h3>{{ todoItem.title }}</h3>
-        <fa-icon
-          class="mx-2 hover:cursor-pointer"
-          (click)="toggleEditMode(true)"
-          [icon]="faPencil"></fa-icon>
-      </ng-template>
-    </div>
-    <div class="">
-      <mat-checkbox
-        #state
-        formControlName="state"
-        [labelPosition]="'before'">
-        <span class="mr-1">{{ state.checked ? 'Done' : 'In progress' }}</span>
-      </mat-checkbox>
-      <button  mat-flat-button (click)="removeTodoItem(todoItem)">X</button>
-    </div>
-  </ng-container>
-</div>
-
+<ng-container *ngIf="todoItem$ | async as todo; else EmptyTodoTemplate">
+  <div class="flex flex-col justify-center items-center gap-y-10 p-8 border-solid border rounded-s" [appTodoState]="todo.state">
+    <h4 class="text-8xl font-bold">{{ todo.title }}</h4>
+    <h5 class="text-4xl">{{ todo.state ? 'Done' : 'In progress' }}</h5>
+  </div>
+</ng-container>
+<ng-template #EmptyTodoTemplate>
+  <div class="flex flex-col justify-center items-center gap-y-10">
+    <h4 class="text-center text-8xl font-bold text-gray-500 dark:text-green-200">No todo found</h4>
+  </div>
+</ng-template>

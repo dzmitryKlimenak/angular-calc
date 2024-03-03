@@ -1,0 +1,44 @@
+<div [appTodoState]="todoItem.state"
+     [formGroup]="todoFg"
+     class="flex justify-between items-center p-2 border-solid border rounded-s">
+  <ng-container *ngIf="todoFg">
+    <div class="flex">
+      <span class="mr-1">{{ index }}:</span>
+      <ng-container *ngIf="isEditMode; else TitleTemplate">
+        <input
+          class="border-solid border rounded-lg px-2 py-0"
+          [class.text-red-900]="titleCtrl.invalid"
+          formControlName="title"
+          type="text"
+          placeholder="Title">
+        <fa-icon
+          class="mx-2 hover:cursor-pointer"
+          (click)="saveTitleChanges()"
+          [icon]="faSave"></fa-icon>
+      </ng-container>
+      <ng-template #TitleTemplate>
+        <h3>{{ todoItem.title }}</h3>
+        <fa-icon
+          class="mx-2 hover:cursor-pointer"
+          (click)="toggleEditMode(true)"
+          [icon]="faPencil"></fa-icon>
+      </ng-template>
+    </div>
+    <div class="flex items-center gap-x-4 hover:cursor-pointer">
+      <mat-checkbox
+        #state
+        formControlName="state"
+        [labelPosition]="'before'">
+        <span class="mr-1">{{ state.checked ? 'Done' : 'In progress' }}</span>
+      </mat-checkbox>
+      <a [routerLink]="todoItem.id">
+        <fa-icon
+          [icon]="faExternalLinkAlt"></fa-icon>
+      </a>
+      <fa-icon
+        (click)="removeTodoItem(todoItem)"
+        [icon]="faWindowClose"></fa-icon>
+    </div>
+  </ng-container>
+</div>
+

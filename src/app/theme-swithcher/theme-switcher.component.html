@@ -1,0 +1,7 @@
+<div class="flex flex-row justify-center mt-4">
+  <div class="text-black dark:text-orange-400 font-bold text-lg mr-1">{{ theme$ | async | uppercase }}</div>
+  <mat-slide-toggle
+    [checked]="theme === EThemeMode.LIGHT"
+    (change)="toggleThemeMode($event.checked)"
+  ></mat-slide-toggle>
+</div>

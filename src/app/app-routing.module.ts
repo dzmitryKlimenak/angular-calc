@@ -9,6 +9,11 @@ const routes: Routes = [
     component: BaseLayoutComponent,
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'todos',
+      },
+      {
         path: 'calculator',
         loadChildren: () =>
           import('./calculator/calculator.module').then((m) => m.CalculatorModule),

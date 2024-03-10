@@ -17,7 +17,7 @@
   </div>
   <ng-container *ngIf="todoListLength$ | async; else EmptyStateTemplate">
     <ng-container *ngFor="let todo of todoList$ | async; trackBy: todoTrack; let i=index">
-      <app-todo-list-item [todoItem]="todo" [index]="i"></app-todo-list-item>
+      <app-todo-list-item [todoItem]="todo"></app-todo-list-item>
     </ng-container>
   </ng-container>
   <ng-template #EmptyStateTemplate>

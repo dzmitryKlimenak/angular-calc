@@ -7,7 +7,7 @@ import {
   Renderer2,
   SimpleChanges,
 } from '@angular/core';
-import { ETodoState } from './todo-manager.enum';
+import { ETodoState } from '../interface/todo-manager.enum';
 
 @Directive({
   selector: '[appTodoState]',

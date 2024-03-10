@@ -31,3 +31,4 @@
     <app-theme-switcher></app-theme-switcher>
   </div>
 </header>
+<app-loading [class.opacity-0]="(loading$ | async) === false"></app-loading>

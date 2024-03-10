@@ -9,6 +9,8 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { BaseLayoutComponent } from './pages/base-layout/base-layout.component';
 import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
+import { LoadingModule } from './shared/component/loading/loading.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent, BaseLayoutComponent, NotFoundComponent],
@@ -19,6 +21,8 @@ import { SharedModule } from './shared/shared.module';
     ThemeSwitcherModule,
     AuthModule,
     SharedModule,
+    LoadingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

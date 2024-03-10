@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { faArrowLeft, faCalculator, faHome, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { Observable } from 'rxjs';
+import { LoadingService } from '../../service/loading.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +18,9 @@ export class HeaderComponent {
 
   protected readonly faTasks = faTasks;
 
-  constructor(private location: Location) {}
+  loading$: Observable<boolean> = this.loadingService.loading$;
+
+  constructor(private location: Location, private loadingService: LoadingService) {}
 
   public goBack(): void {
     this.location.back();

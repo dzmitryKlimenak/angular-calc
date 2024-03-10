@@ -6,6 +6,7 @@ import { ThemeSwitcherModule } from '../theme-swithcher/theme-swithcher.module';
 import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { LoadingModule } from './component/loading/loading.module';
 
 @NgModule({
   declarations: [HeaderComponent],
@@ -17,6 +18,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     FontAwesomeModule,
     RouterLink,
     RouterLinkActive,
+    LoadingModule,
   ],
   exports: [HeaderComponent],
 })

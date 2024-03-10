@@ -1,14 +1,8 @@
 import { FormControl } from '@angular/forms';
 import { ETodoAction } from './todo-manager.enum';
 
-export interface ITodoItem {
-  id: string;
-  title: string;
-  state: boolean;
-}
-
 export interface ITodoItemFilter {
-  [key: string]: boolean | string;
+  [key: string]: boolean | string | number;
 }
 
 export type TodoActionType =

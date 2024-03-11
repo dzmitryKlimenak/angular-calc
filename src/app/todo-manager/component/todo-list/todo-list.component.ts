@@ -1,11 +1,14 @@
 import { Component, DestroyRef, OnInit } from '@angular/core';
 import { TodoListService } from '../../service/todo-list.service';
-import { map, Observable } from 'rxjs';
-import { faEraser } from '@fortawesome/free-solid-svg-icons/faEraser';
+import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { ETodoAction } from '../../interface/todo-manager.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ITodoItem } from '../../../shared/interface';
+import { ITodoItem, IUserData } from '../../../shared/interface';
+import { ITodoListFormGroup } from '../../interface/todo-manager.interface';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UsersService } from '../../service/users.service';
+import { UI_DELAY_TIME } from '../../../shared/constant';
 
 @Component({
   selector: 'app-todo-list',
@@ -13,21 +16,57 @@ import { ITodoItem } from '../../../shared/interface';
   styleUrls: ['./todo-list.component.scss'],
 })
 export class TodoListComponent implements OnInit {
-  protected readonly faEraser = faEraser;
-
   public readonly todoList$: Observable<ITodoItem[]> = this.todoService.todos$;
 
   todoListLength$: Observable<number> = this.todoList$.pipe(map((todos) => todos.length));
 
+  public formGroup: FormGroup<ITodoListFormGroup>;
+
+  get userCtrl(): FormControl<IUserData> {
+    return this.formGroup && this.formGroup.controls.user;
+  }
+
+  get stateCtrl(): FormControl<boolean> {
+    return this.formGroup && this.formGroup.controls.state;
+  }
+
+  public readonly todoStateOptions: { label: string; value: boolean }[] = [
+    { label: 'Completed', value: true },
+    { label: 'In progress', value: false },
+  ];
+
+  public userOptions: IUserData[] = [];
+
+  public filterValues: Partial<{ user: IUserData; state: boolean }>;
+
   constructor(
     private todoService: TodoListService,
+    private userService: UsersService,
     private router: Router,
     private route: ActivatedRoute,
     private destroyRef: DestroyRef,
+    private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+    this.initForm();
+
+    this.formGroup.valueChanges
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        debounceTime(UI_DELAY_TIME),
+        startWith(this.formGroup.value),
+      )
+      .subscribe((value) => (this.filterValues = value));
+  }
+
+  private initForm(): void {
+    this.userOptions = this.userService.getUsersList();
+    this.formGroup = this.fb.group<ITodoListFormGroup>({
+      user: this.fb.control<IUserData>(null),
+      state: this.fb.control<boolean>(null),
+    });
   }
 
   public addItem(): void {

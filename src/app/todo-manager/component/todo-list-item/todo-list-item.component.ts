@@ -1,5 +1,5 @@
 import { Component, DestroyRef, HostBinding, Input, OnInit } from '@angular/core';
-import { ITodoItemFormgroup } from '../../interface/todo-manager.interface';
+import { ITodoItemFormGroup } from '../../interface/todo-manager.interface';
 import { TodoListService } from '../../service/todo-list.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -30,7 +30,7 @@ export class TodoListItemComponent implements OnInit {
     map((users) => users.find((user) => user.id === this.todoItem.userId)),
   );
 
-  public todoFg: FormGroup<ITodoItemFormgroup>;
+  public todoFg: FormGroup<ITodoItemFormGroup>;
 
   get stateCtrl() {
     return this.todoFg && this.todoFg.get('state');

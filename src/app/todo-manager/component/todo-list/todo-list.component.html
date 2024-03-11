@@ -1,24 +1,33 @@
 <div class="flex-col">
-  <div class="flex items-center gap-x-4 text-gray-500 dark:text-green-200">
+  <div class="flex items-center gap-x-4 text-gray-500 dark:text-green-200"
+       *ngIf="formGroup"
+       [formGroup]="formGroup">
     <span>Filter by:</span>
-    <a
-      routerLinkActive="text-green-500 dark:text-orange-400"
-      [routerLink]="['/todos']"
-      [queryParams]="{ state: true }">Completed</a>
-    <a
-      routerLinkActive="text-green-500 dark:text-orange-400"
-      [routerLink]="['/todos']"
-      [queryParams]="{ state: false }">In progress</a>
-    <fa-icon
-      title="Reset filter"
-      class="text-gray-400 dark:text-orange-300 hover:cursor-pointer ml-2"
-      (click)="resetFilter()"
-      [icon]="faEraser"></fa-icon>
+    <mat-form-field appearance="fill">
+      <mat-label>Assign</mat-label>
+      <mat-select [formControl]="userCtrl">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let user of userOptions" [value]="user">
+          {{user.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select [formControl]="stateCtrl">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let state of todoStateOptions" [value]="state.value">
+          {{state.label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <ng-container *ngIf="todoListLength$ | async; else EmptyStateTemplate">
-    <ng-container *ngFor="let todo of todoList$ | async; trackBy: todoTrack; let i=index">
-      <app-todo-list-item [todoItem]="todo"></app-todo-list-item>
-    </ng-container>
+    <cdk-virtual-scroll-viewport itemSize="50" class="h-96">
+      <ng-container *cdkVirtualFor="let todo of todoList$ | async | todoListFilter: filterValues">
+        <app-todo-list-item [todoItem]="todo"></app-todo-list-item>
+      </ng-container>
+    </cdk-virtual-scroll-viewport>
   </ng-container>
   <ng-template #EmptyStateTemplate>
     <h2 class="text-center font-bold text-xl text-gray-500 dark:text-green-200">Empty Todo List</h2>

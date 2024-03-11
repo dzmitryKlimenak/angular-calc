@@ -16,9 +16,25 @@ import { TodoListService } from './service/todo-list.service';
 import { UsersService } from './service/users.service';
 import { TodoListResolver } from './resolver/todo-list.resolver';
 import { TodoItemResolver } from './resolver/todo-item.resolver';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
+import { TodoListFilterPipe } from './pipe/todo-list-filter.pipe';
+import {
+  CdkFixedSizeVirtualScroll,
+  CdkVirtualForOf,
+  CdkVirtualScrollViewport,
+} from '@angular/cdk/scrolling';
 
 @NgModule({
-  declarations: [TodoListComponent, TodoListItemComponent, TodoStateDirective, TodoItemComponent],
+  declarations: [
+    TodoListComponent,
+    TodoListItemComponent,
+    TodoStateDirective,
+    TodoItemComponent,
+    TodoListFilterPipe,
+  ],
   imports: [
     CommonModule,
     TodoManagerRoutingModule,
@@ -28,6 +44,13 @@ import { TodoItemResolver } from './resolver/todo-item.resolver';
     MatCheckboxModule,
     MatListModule,
     FontAwesomeModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatSelectModule,
+    CdkVirtualScrollViewport,
+    CdkVirtualForOf,
+    CdkFixedSizeVirtualScroll,
   ],
   providers: [AuthGuard, TodoListService, UsersService, TodoListResolver, TodoItemResolver],
 })

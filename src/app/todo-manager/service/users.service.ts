@@ -12,6 +12,10 @@ export class UsersService {
 
   constructor(private apiService: ApiRestService) {}
 
+  public getUsersList(): IUserData[] {
+    return this.usersSub.getValue();
+  }
+
   public fetchUsers(): Observable<IUserData[]> {
     return this.apiService
       .fetchUsers()

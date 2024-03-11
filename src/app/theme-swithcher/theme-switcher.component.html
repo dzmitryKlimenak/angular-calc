@@ -1,9 +1,9 @@
-<div class="flex flex-row justify-center text-yellow-600 dark:text-orange-400 text-2xl">
+<div class="flex flex-row justify-center">
   <mat-slide-toggle
     [checked]="themeMode === EThemeMode.LIGHT"
     (change)="toggleThemeMode($event.checked)">
     <fa-icon
-      class="mx-2 hover:cursor-pointer"
+      class="mx-2 text-yellow-600 dark:text-orange-400 text-2xl hover:cursor-pointer"
       [icon]="themeMode === EThemeMode.LIGHT ? faSun : faMoon"></fa-icon>
   </mat-slide-toggle>
 </div>

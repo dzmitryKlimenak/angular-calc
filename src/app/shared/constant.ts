@@ -1,1 +1,1 @@
-export const UI_DELAY_TIME = 300;
+export const UI_DELAY_TIME = 500;

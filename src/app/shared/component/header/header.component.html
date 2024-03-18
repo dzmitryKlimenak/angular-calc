@@ -1,0 +1,34 @@
+<header class="py-4 flex justify-between items-center gap-x-4">
+  <div class="flex gap-x-4 text-gray-400 dark:text-orange-300 text-2xl">
+    <fa-icon
+      class="hover:cursor-pointer"
+      (click)="goBack()"
+      [icon]="faArrowLeft"></fa-icon>
+    <a class=" hover:cursor-pointer"
+       routerLinkActive="text-orange-300 dark:text-green-200"
+       [routerLinkActiveOptions]="{ exact: false }"
+       routerLink="/">
+      <fa-icon
+        [icon]="faHome"></fa-icon>
+    </a>
+  </div>
+  <div class="flex gap-x-4 justify-center text-gray-400 dark:text-orange-300 text-2xl">
+    <a routerLinkActive="text-orange-300 dark:text-green-200"
+       [routerLink]="['todos']">
+      <fa-icon
+        class="hover:cursor-pointer"
+        [icon]="faTasks"></fa-icon>
+    </a>
+    <a routerLinkActive="text-orange-300 dark:text-green-200"
+       [routerLink]="['calculator']">
+      <fa-icon
+        class="hover:cursor-pointer"
+        [icon]="faCalculator"></fa-icon>
+    </a>
+  </div>
+  <div class="flex justify-end">
+    <app-auth></app-auth>
+    <app-theme-switcher></app-theme-switcher>
+  </div>
+</header>
+<app-loading [class.opacity-0]="(loading$ | async) === false"></app-loading>

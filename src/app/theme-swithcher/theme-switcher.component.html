@@ -1,7 +1,9 @@
-<div class="flex flex-row justify-center mt-4">
-  <div class="text-black dark:text-orange-400 font-bold text-lg mr-1">{{ theme$ | async | uppercase }}</div>
+<div class="flex flex-row justify-center">
   <mat-slide-toggle
-    [checked]="theme === EThemeMode.LIGHT"
-    (change)="toggleThemeMode($event.checked)"
-  ></mat-slide-toggle>
+    [checked]="themeMode === EThemeMode.LIGHT"
+    (change)="toggleThemeMode($event.checked)">
+    <fa-icon
+      class="mx-2 text-yellow-600 dark:text-orange-400 text-2xl hover:cursor-pointer"
+      [icon]="themeMode === EThemeMode.LIGHT ? faSun : faMoon"></fa-icon>
+  </mat-slide-toggle>
 </div>

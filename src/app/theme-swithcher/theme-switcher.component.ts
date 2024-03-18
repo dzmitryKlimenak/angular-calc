@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { EThemeMode } from './theme-switcher.enum';
 import { IThemeMode } from './theme-switcher.interface';
 import { ThemeSwitcherService } from './theme-switcher.service';
-import { Observable } from 'rxjs';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-theme-switcher',
@@ -12,14 +12,18 @@ import { Observable } from 'rxjs';
 export class ThemeSwitcherComponent implements OnInit {
   protected readonly EThemeMode = EThemeMode;
 
-  theme: IThemeMode = this.themeService.getTheme();
+  protected readonly faSun = faSun;
 
-  theme$: Observable<IThemeMode> = this.themeService.theme$;
+  protected readonly faMoon = faMoon;
+
+  get themeMode(): IThemeMode {
+    return this.themeService.getTheme();
+  }
 
   constructor(private renderer: Renderer2, private themeService: ThemeSwitcherService) {}
 
   ngOnInit(): void {
-    this.bodyCLassHandler(this.theme);
+    this.bodyCLassHandler(this.themeMode);
   }
 
   public toggleThemeMode(state: boolean): void {

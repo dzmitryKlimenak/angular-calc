@@ -1,0 +1,10 @@
+<div class="flex flex-row justify-center">
+  <mat-slide-toggle
+    [checked]="isAuth"
+    (change)="toggleAuthState($event.checked)">
+    <fa-icon
+      class="text-2xl"
+      [ngClass]="{'text-red-700 dark:text-red-500' : !isAuth, 'text-green-700 dark:text-green-500' : isAuth}"
+      [icon]="isAuth ? faUser : faUserNinja"></fa-icon>
+  </mat-slide-toggle>
+</div>

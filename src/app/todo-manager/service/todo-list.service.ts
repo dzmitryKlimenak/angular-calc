@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TodoActionType } from '../interface/todo-manager.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
 import { ETodoAction } from '../interface/todo-manager.enum';
 import { ApiRestService } from '../../shared/service/api-rest.service';
 import { ITodoItem } from '../../shared/interface';
@@ -12,7 +12,9 @@ export class TodoListService {
 
   private todosSub: BehaviorSubject<ITodoItem[]> = new BehaviorSubject<ITodoItem[]>([]);
 
-  todos$: Observable<ITodoItem[]> = this.todosSub.asObservable();
+  todos$: Observable<ITodoItem[]> = this.todosSub
+    .asObservable()
+    .pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
   constructor(private apiService: ApiRestService) {}
 

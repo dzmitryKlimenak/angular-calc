@@ -23,7 +23,7 @@
     </mat-form-field>
   </div>
   <ng-container *ngIf="todoListLength$ | async; else EmptyStateTemplate">
-    <cdk-virtual-scroll-viewport itemSize="50" class="h-96">
+    <cdk-virtual-scroll-viewport itemSize="1" class="h-[60vh]">
       <ng-container *cdkVirtualFor="let todo of todoList$ | async | todoListFilter: filterValues">
         <app-todo-list-item [todoItem]="todo"></app-todo-list-item>
       </ng-container>

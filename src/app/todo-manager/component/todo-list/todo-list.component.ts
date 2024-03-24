@@ -2,7 +2,7 @@ import { Component, DestroyRef, OnInit } from '@angular/core';
 import { TodoListService } from '../../service/todo-list.service';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { ETodoAction } from '../../interface/todo-manager.enum';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ITodoItem, IUserData } from '../../../shared/interface';
 import { ITodoListFormGroup } from '../../interface/todo-manager.interface';
@@ -43,13 +43,11 @@ export class TodoListComponent implements OnInit {
     private todoService: TodoListService,
     private userService: UsersService,
     private router: Router,
-    private route: ActivatedRoute,
     private destroyRef: DestroyRef,
     private fb: FormBuilder,
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
     this.initForm();
 
     this.formGroup.valueChanges

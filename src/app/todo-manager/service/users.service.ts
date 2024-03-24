@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
 import { IUserData } from '../../shared/interface';
 import { tap } from 'rxjs/operators';
 import { ApiRestService } from '../../shared/service/api-rest.service';
@@ -8,7 +8,9 @@ import { ApiRestService } from '../../shared/service/api-rest.service';
 export class UsersService {
   private usersSub: BehaviorSubject<IUserData[]> = new BehaviorSubject<IUserData[]>([]);
 
-  users$: Observable<IUserData[]> = this.usersSub.asObservable();
+  users$: Observable<IUserData[]> = this.usersSub
+    .asObservable()
+    .pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
   constructor(private apiService: ApiRestService) {}
 

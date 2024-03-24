@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { Location } from '@angular/common';
 import { faArrowLeft, faCalculator, faHome, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Observable } from 'rxjs';
@@ -17,6 +17,8 @@ export class HeaderComponent {
   protected readonly faCalculator = faCalculator;
 
   protected readonly faTasks = faTasks;
+
+  @HostBinding('class') classList = 'relative';
 
   loading$: Observable<boolean> = this.loadingService.loading$;
 

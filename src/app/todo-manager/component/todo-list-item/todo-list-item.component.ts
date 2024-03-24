@@ -72,7 +72,12 @@ export class TodoListItemComponent implements OnInit {
           this.todoService.updateTodoItem(this.todoItem.id, { completed: state }),
         ),
       )
-      .subscribe(() => this.todoService.todoAction(ETodoAction.REMOVE, this.todoItem));
+      .subscribe((todo) =>
+        this.todoService.todoAction(ETodoAction.EDIT, {
+          ...todo,
+          completed: !this.todoItem.completed,
+        }),
+      );
 
     this.onDeleteTodo
       .pipe(
@@ -80,17 +85,21 @@ export class TodoListItemComponent implements OnInit {
         debounceTime(UI_DELAY_TIME),
         switchMap(() => this.todoService.deleteTodoItem(this.todoItem.id)),
       )
-      .subscribe((todo) => this.todoService.todoAction(ETodoAction.EDIT, { ...todo }));
+      .subscribe(() => this.todoService.todoAction(ETodoAction.REMOVE, this.todoItem));
   }
 
   public saveTitleChanges(): void {
     const title: string = this.titleCtrl.value.trim();
     if (this.titleCtrl.valid && !!title?.length) {
       this.toggleEditMode(false);
-      this.todoService.todoAction(ETodoAction.EDIT, {
-        ...this.todoItem,
-        title: this.titleCtrl.value,
-      });
+      this.todoService
+        .updateTodoItem(this.todoItem.id, { title: this.titleCtrl.value })
+        .subscribe(() =>
+          this.todoService.todoAction(ETodoAction.EDIT, {
+            ...this.todoItem,
+            title: this.titleCtrl.value,
+          }),
+        );
     }
   }
 

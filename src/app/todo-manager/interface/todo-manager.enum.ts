@@ -10,5 +10,5 @@ export enum ETodoAction {
 
 export enum ETodoState {
   ACTIVE = 'active',
-  'COMPLETED' = 'completed',
+  COMPLETED = 'completed',
 }

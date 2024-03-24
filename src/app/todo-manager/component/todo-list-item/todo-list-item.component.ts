@@ -94,6 +94,7 @@ export class TodoListItemComponent implements OnInit {
       this.toggleEditMode(false);
       this.todoService
         .updateTodoItem(this.todoItem.id, { title: this.titleCtrl.value })
+        .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe(() =>
           this.todoService.todoAction(ETodoAction.EDIT, {
             ...this.todoItem,

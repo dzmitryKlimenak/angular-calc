@@ -1,5 +1,5 @@
-<div class="flex-col">
-  <div class="flex items-center gap-x-4 text-gray-500 dark:text-green-200"
+<div class="todo-list">
+  <div class="todo-list__filters"
        [formGroup]="formGroup">
     <span>Filter by:</span>
     <mat-form-field appearance="fill">
@@ -13,17 +13,16 @@
     </mat-form-field>
   </div>
   <ng-container *ngIf="todoListLength$ | async as length; else EmptyStateTemplate">
-
-    <div cdkDropListGroup class="grid grid-cols-2 gap-4">
+    <div cdkDropListGroup class="todo-list__body">
       <div *ngIf="(todoList$ | async | todoListFilter: {user: userCtrl.value, state: false}) as inProgressTodos"
-           class="p-4 mr-1 border-solid border rounded border-gray-200 dark:border-gray-700">
-        <div class="text-xl text-gray-500 dark:text-green-200">In progress: ({{inProgressTodos.length}}/{{length}})</div>
+           class="column__wrapper">
+        <div class="column__title">In progress: ({{inProgressTodos.length}}/{{length}})</div>
         <div
           cdkDropList
           [cdkDropListData]="inProgressTodos"
           (cdkDropListDropped)="drop($event)">
           <ng-container *ngIf="inProgressTodos.length; else EmptyStateTemplate">
-            <div class="h-[65vh] overflow-y-auto">
+            <div class="column__items">
               <app-todo-list-item
                 cdkDrag
                 *ngFor="let todo of inProgressTodos; trackBy: todoTrackFn"
@@ -32,16 +31,15 @@
           </ng-container>
         </div>
       </div>
-
       <div *ngIf="(todoList$ | async | todoListFilter: {user: userCtrl.value, state: true}) as completedTodos"
-           class="p-4 mr-1 border-solid border rounded border-gray-200 dark:border-gray-700">
-        <div class="text-xl text-gray-500 dark:text-green-200">Done: ({{completedTodos.length}}/{{length}})</div>
+           class="column__wrapper">
+        <div class="column__title">Done: ({{completedTodos.length}}/{{length}})</div>
         <ng-container *ngIf="completedTodos.length; else EmptyStateTemplate">
           <div
             cdkDropList
             [cdkDropListData]="completedTodos"
             (cdkDropListDropped)="drop($event)">
-            <div class="h-[65vh] overflow-y-auto">
+            <div class="column__items">
               <app-todo-list-item
                 cdkDrag
                 *ngFor="let todo of completedTodos; trackBy: todoTrackFn"
@@ -53,7 +51,7 @@
     </div>
   </ng-container>
   <ng-template #EmptyStateTemplate>
-    <h2 class="text-center font-bold text-xl text-gray-500 dark:text-green-200">Empty List</h2>
+    <h2 class="empty__title">Empty List</h2>
   </ng-template>
 </div>
 

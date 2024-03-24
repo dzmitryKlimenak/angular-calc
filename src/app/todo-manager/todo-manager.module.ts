@@ -26,6 +26,7 @@ import {
   CdkVirtualForOf,
   CdkVirtualScrollViewport,
 } from '@angular/cdk/scrolling';
+import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,9 @@ import {
     CdkVirtualScrollViewport,
     CdkVirtualForOf,
     CdkFixedSizeVirtualScroll,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
   ],
   providers: [AuthGuard, TodoListService, UsersService, TodoListResolver, TodoItemResolver],
 })

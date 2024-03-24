@@ -6,6 +6,7 @@ import { ITodoListFormGroup } from '../../interface/todo-manager.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from '../../service/users.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { ETodoAction } from '../../interface/todo-manager.enum';
 
 @Component({
   selector: 'app-todo-list',
@@ -39,8 +40,9 @@ export class TodoListComponent implements OnInit {
     });
   }
 
-  drop(event: CdkDragDrop<ITodoItem[]>) {
+  public drop(event: CdkDragDrop<ITodoItem[]>): void {
     if (event.previousContainer === event.container) {
+      console.log(event);
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(
@@ -49,6 +51,21 @@ export class TodoListComponent implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
+      const droppedItem: ITodoItem = event.item.data;
+      if (droppedItem) {
+        this.todoService.todoAction(ETodoAction.EDIT, {
+          ...droppedItem,
+          completed: !droppedItem.completed,
+        });
+      }
     }
+  }
+
+  public todoTrackFn(index: number, item: ITodoItem): number {
+    return item.id;
+  }
+
+  public userTrackFn(index: number, item: IUserData): number {
+    return item.id;
   }
 }

@@ -61,10 +61,9 @@ export class TodoListComponent implements OnInit {
         debounceTime(UI_DELAY_TIME),
         startWith(this.filterFg.value),
       )
-      .subscribe(({ user, priority }) => {
-        console.log('user', user, 'priority', priority);
-        this.router.navigate([], { queryParams: { userId: user?.id, priority: priority } });
-      });
+      .subscribe(({ user, priority }) =>
+        this.router.navigate([], { queryParams: { userId: user?.id, priority: priority } }),
+      );
   }
 
   private initForm(): void {
@@ -87,7 +86,6 @@ export class TodoListComponent implements OnInit {
         event.previousIndex,
         event.currentIndex,
       );
-      console.log(event.item.data);
       const droppedItem: ITodoItem = event.item.data;
       if (droppedItem) {
         this.todoService.todoAction(ETodoAction.EDIT, {

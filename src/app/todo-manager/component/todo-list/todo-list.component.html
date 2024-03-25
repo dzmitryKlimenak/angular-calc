@@ -15,8 +15,8 @@
       <mat-label>Priority</mat-label>
       <mat-select [formControl]="priorityCtrl">
         <mat-option>--</mat-option>
-        <mat-option *ngFor="let priority of priorityOptions" [value]="priority.value">
-          {{priority.label}}
+        <mat-option *ngFor="let priority of priorityOptions" [value]="priority">
+          {{priority | todoPriorityLabel}}
         </mat-option>
       </mat-select>
     </mat-form-field>

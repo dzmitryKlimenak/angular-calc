@@ -2,11 +2,11 @@ import { Component, DestroyRef, OnInit } from '@angular/core';
 import { TodoListService } from '../../service/todo-list.service';
 import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { ITodoItem, IUserData } from '../../../shared/interface';
-import { ITodoListFormGroup, TodoPriorityType } from '../../interface/todo-manager.interface';
+import { ITodoListFormGroup } from '../../interface/todo-manager.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { UsersService } from '../../service/users.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { ETodoAction, ETodoPriority } from '../../interface/todo-manager.enum';
+import { ETodoAction } from '../../interface/todo-manager.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UI_DELAY_TIME } from '../../../shared/constant';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,13 +25,7 @@ export class TodoListComponent implements OnInit {
 
   public filterFg: FormGroup<ITodoListFormGroup>;
 
-  public priorityOptions: { label: TodoPriorityType; value: number }[] = [
-    { label: ETodoPriority.NONE, value: 0 },
-    { label: ETodoPriority.LOW, value: 1 },
-    { label: ETodoPriority.MEDIUM, value: 2 },
-    { label: ETodoPriority.HIGH, value: 3 },
-    { label: ETodoPriority.CRITICAL, value: 4 },
-  ];
+  public priorityOptions: number[] = [0, 1, 2, 3, 4];
 
   get userCtrl(): FormControl<IUserData> {
     return this.filterFg && this.filterFg.controls.user;

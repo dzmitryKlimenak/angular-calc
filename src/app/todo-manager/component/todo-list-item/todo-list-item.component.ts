@@ -72,9 +72,9 @@ export class TodoListItemComponent implements OnInit {
           this.todoService.updateTodoItem(this.todoItem.id, { completed: state }),
         ),
       )
-      .subscribe((todo) =>
+      .subscribe(() =>
         this.todoService.todoAction(ETodoAction.EDIT, {
-          ...todo,
+          ...this.todoItem,
           completed: !this.todoItem.completed,
         }),
       );

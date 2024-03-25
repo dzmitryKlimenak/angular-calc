@@ -2,7 +2,7 @@
   @apply flex-col;
 
   &__filters {
-    @apply flex items-center gap-x-4 text-xl text-gray-500 dark:text-green-200;
+    @apply flex items-center gap-x-4 text-xl text-gray-500 dark:text-green-200 mb-4;
   }
 
   &__body {

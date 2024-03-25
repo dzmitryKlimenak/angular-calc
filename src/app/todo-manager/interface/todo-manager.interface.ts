@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { ETodoAction } from './todo-manager.enum';
+import { ETodoAction, ETodoPriority } from './todo-manager.enum';
 import { IUserData } from '../../shared/interface';
 
 export type TodoActionType =
@@ -17,4 +17,11 @@ export interface ITodoItemFormGroup {
 }
 export interface ITodoListFormGroup {
   user: FormControl<IUserData | null>;
+  priority: FormControl<number | null>;
 }
+export type TodoPriorityType =
+  | ETodoPriority.NONE
+  | ETodoPriority.LOW
+  | ETodoPriority.MEDIUM
+  | ETodoPriority.HIGH
+  | ETodoPriority.CRITICAL;

@@ -1,0 +1,120 @@
+.mat-mdc-form-field {
+  &.mat-mdc-form-field-type-mat-select {
+    .mat-mdc-text-field-wrapper {
+      @apply p-0;
+
+      .mat-mdc-form-field-flex {
+        @apply bg-white rounded p-2;
+
+        .dark & {
+          @apply bg-gray-200 #{!important};
+        }
+
+        .mat-mdc-form-field-infix {
+          @apply border-0 p-0 min-h-8;
+
+          .mat-mdc-floating-label {
+            @apply top-1/2;
+          }
+        }
+
+        .mat-mdc-select-arrow-wrapper {
+          @apply transform translate-y-0;
+        }
+      }
+    }
+
+    .mat-mdc-form-field-wrapper {
+      @apply p-0 m-0;
+      .dark & {
+        @apply bg-gray-200;
+      }
+    }
+
+    .mat-mdc-form-field-underline {
+      @apply hidden;
+    }
+  }
+
+  &.mat-focused.mat-primary {
+    .mat-form-field-ripple {
+      @apply bg-green-200;
+    }
+
+    .mat-mdc-select-arrow {
+      @apply text-green-200;
+    }
+  }
+
+  .mat-mdc-form-field-subscript-wrapper {
+    @apply hidden;
+  }
+
+  .mat-mdc-form-field-focus-overlay {
+    @apply opacity-0 #{!important};
+  }
+}
+
+.mat-mdc-select {
+  @apply text-sm pt-2;
+
+  .dark & {
+    @apply bg-gray-200 #{!important};
+  }
+
+  .mat-mdc-select-value {
+    .dark & {
+      @apply text-gray-700;
+    }
+  }
+
+  .mat-mdc-select-arrow {
+    .dark & {
+      @apply text-gray-200;
+    }
+  }
+
+  &.hide-arrow {
+    .mat-mdc-select-value {
+      max-width: none;
+    }
+    .mat-select-arrow-wrapper {
+      display: none;
+    }
+  }
+}
+
+.mat-mdc-select-panel {
+  .dark & {
+    @apply bg-gray-200;
+  }
+
+  .mat-mdc-option {
+    @apply min-h-8;
+    .dark & {
+      @apply text-gray-700;
+    }
+  }
+
+  .mat-mdc-option.mat-selected {
+    &:not(.mat-option-multiple),
+    &:not(.mat-option-disabled) {
+      @apply bg-white;
+
+      .dark & {
+        @apply bg-gray-200;
+      }
+    }
+  }
+
+  &.mat-mdc-primary {
+    .mat-option.mat-selected {
+      &:not(.mat-option-disabled) {
+        @apply text-green-200;
+      }
+    }
+  }
+  .mat-mdc-select-value-text {
+    @apply text-gray-700;
+  }
+}

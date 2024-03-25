@@ -16,28 +16,29 @@
         [icon]="faWindowClose"></fa-icon>
     </div>
   </ng-container>
-  <div class="flex w-full justify-between" *ngIf="todoFg">
-    <div class="flex">
-      <ng-container *ngIf="isEditMode; else TitleTemplate">
-        <input
-          class="border-solid border rounded-lg px-2 py-0"
-          [class.text-red-900]="titleCtrl.invalid"
-          formControlName="title"
-          type="text"
-          placeholder="Title">
-        <fa-icon
-          class="mx-2 hover:cursor-pointer"
-          (click)="saveTitleChanges()"
-          [icon]="faSave"></fa-icon>
-      </ng-container>
-      <ng-template #TitleTemplate>
-        <h3>{{ todoItem.title }}</h3>
-        <fa-icon
-          class="mx-2 hover:cursor-pointer"
-          (click)="toggleEditMode(true)"
-          [icon]="faPencil"></fa-icon>
-      </ng-template>
-    </div>
+  <div class="flex items-center">
+    <ng-container *ngIf="isEditMode; else TitleTemplate">
+      <input
+        class="border-solid border rounded-lg px-2 py-0"
+        [class.text-red-900]="titleCtrl.invalid"
+        formControlName="title"
+        type="text"
+        placeholder="Title">
+      <fa-icon
+        class="mx-2 hover:cursor-pointer"
+        (click)="saveTitleChanges()"
+        [icon]="faSave"></fa-icon>
+    </ng-container>
+    <ng-template #TitleTemplate>
+      <h3 class="truncate max-w-32 mb-0 leading-normal">{{ todoItem.title | titlecase }}</h3>
+      <fa-icon
+        class="mx-2 hover:cursor-pointer"
+        (click)="toggleEditMode(true)"
+        [icon]="faPencil"></fa-icon>
+    </ng-template>
+  </div>
+  <div class="flex w-full justify-between items-center" *ngIf="todoFg">
+    <div>Priority: {{todoItem.priority | todoPriorityLabel}}</div>
     <div class="flex items-center gap-x-4 hover:cursor-pointer">
       <mat-checkbox
         #state

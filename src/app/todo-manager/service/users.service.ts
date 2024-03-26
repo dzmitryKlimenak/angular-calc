@@ -18,6 +18,10 @@ export class UsersService {
     return this.usersSub.getValue();
   }
 
+  public getUserById(uuid: number): IUserData {
+    return this.usersSub.getValue().find((user) => user.id === uuid);
+  }
+
   public fetchUsers(): Observable<IUserData[]> {
     return this.apiService
       .fetchUsers()

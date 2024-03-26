@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TodoActionType } from '../interface/todo-manager.interface';
-import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
+import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { ETodoAction } from '../interface/todo-manager.enum';
 import { ApiRestService } from '../../shared/service/api-rest.service';
 import { ITodoItem } from '../../shared/interface';
 import { tap } from 'rxjs/operators';
+import { getRandomIntInclusive } from '../../shared/function/util';
 
 @Injectable()
 export class TodoListService {
@@ -17,9 +18,18 @@ export class TodoListService {
   constructor(private apiService: ApiRestService) {}
 
   public fetchTodoList(): Observable<ITodoItem[]> {
-    return this.apiService
-      .fetchTodoList()
-      .pipe(tap((todos: ITodoItem[]) => this.todosSub.next(todos)));
+    return this.apiService.fetchTodoList().pipe(
+      map((todos: ITodoItem[]) => {
+        return todos.map((todo) => {
+          const priorityValue = getRandomIntInclusive(0, 4);
+          return {
+            ...todo,
+            priority: priorityValue,
+          };
+        });
+      }),
+      tap((todos: ITodoItem[]) => this.todosSub.next(todos)),
+    );
   }
 
   public fetchTodoItem(id: number): Observable<ITodoItem> {

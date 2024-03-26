@@ -26,6 +26,8 @@ import {
   CdkVirtualForOf,
   CdkVirtualScrollViewport,
 } from '@angular/cdk/scrolling';
+import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { TodoPriorityLabelPipe } from './pipe/todo-priority-label.pipe';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import {
     TodoStateDirective,
     TodoItemComponent,
     TodoListFilterPipe,
+    TodoPriorityLabelPipe,
   ],
   imports: [
     CommonModule,
@@ -51,6 +54,9 @@ import {
     CdkVirtualScrollViewport,
     CdkVirtualForOf,
     CdkFixedSizeVirtualScroll,
+    CdkDropListGroup,
+    CdkDropList,
+    CdkDrag,
   ],
   providers: [AuthGuard, TodoListService, UsersService, TodoListResolver, TodoItemResolver],
 })

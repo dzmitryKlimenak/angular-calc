@@ -2,5 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "assets/scss/mat-select";
+@import "assets/scss/fa-icon";
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

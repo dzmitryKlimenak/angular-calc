@@ -12,3 +12,11 @@ export enum ETodoState {
   ACTIVE = 'active',
   COMPLETED = 'completed',
 }
+
+export enum ETodoPriority {
+  NONE = 'None',
+  LOW = 'Low',
+  MEDIUM = 'Medium',
+  HIGH = 'High',
+  CRITICAL = 'Critical',
+}

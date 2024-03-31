@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { LoadingModule } from './shared/component/loading/loading.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotificationModule } from './shared/component/notification/notification.module';
 
 @NgModule({
   declarations: [AppComponent, BaseLayoutComponent, NotFoundComponent],
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoadingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NotificationModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

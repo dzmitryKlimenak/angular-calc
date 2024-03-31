@@ -1,6 +1,10 @@
 .todo-list {
   @apply flex-col;
 
+  &__header {
+    @apply flex items-center justify-between gap-4;
+  }
+
   &__filters {
     @apply flex items-center gap-x-4 text-xl text-gray-500 dark:text-green-200 mb-4;
   }

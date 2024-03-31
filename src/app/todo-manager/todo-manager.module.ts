@@ -28,6 +28,8 @@ import {
 } from '@angular/cdk/scrolling';
 import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { TodoPriorityLabelPipe } from './pipe/todo-priority-label.pipe';
+import { CreateNewTodoDialogComponent } from './component/create-new-todo-dialog/create-new-todo-dialog.component';
+import { DialogModule } from '../shared/component/dialog/dialog.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import { TodoPriorityLabelPipe } from './pipe/todo-priority-label.pipe';
     TodoItemComponent,
     TodoListFilterPipe,
     TodoPriorityLabelPipe,
+    CreateNewTodoDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +60,7 @@ import { TodoPriorityLabelPipe } from './pipe/todo-priority-label.pipe';
     CdkDropListGroup,
     CdkDropList,
     CdkDrag,
+    DialogModule,
   ],
   providers: [AuthGuard, TodoListService, UsersService, TodoListResolver, TodoItemResolver],
 })

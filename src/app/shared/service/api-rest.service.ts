@@ -51,6 +51,17 @@ export class ApiRestService {
     );
   }
 
+  addNewTodoItem(id: number, todo: ITodoItem): Observable<ITodoItem> {
+    const url: string = `${BASE_API_URL}/${API_URL.TODOS}/${id}`;
+    const body: string = JSON.stringify(todo);
+    return this.httpClient.put<ITodoItem>(url, body).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      }),
+    );
+  }
+
   fetchUsers(): Observable<IUserData[]> {
     const url: string = `${BASE_API_URL}/${API_URL.USERS}`;
     return this.httpClient.get<IUserData[]>(url).pipe(

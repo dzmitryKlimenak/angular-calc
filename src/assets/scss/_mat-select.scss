@@ -79,7 +79,7 @@
       max-width: none;
     }
     .mat-select-arrow-wrapper {
-      display: none;
+      @apply hidden;
     }
   }
 }

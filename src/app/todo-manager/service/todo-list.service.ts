@@ -17,6 +17,10 @@ export class TodoListService {
 
   constructor(private apiService: ApiRestService) {}
 
+  public getPriorityList(): number[] {
+    return [0, 1, 2, 3, 4];
+  }
+
   public fetchTodoList(): Observable<ITodoItem[]> {
     return this.apiService.fetchTodoList().pipe(
       map((todos: ITodoItem[]) => {
@@ -47,10 +51,14 @@ export class TodoListService {
     return this.apiService.patchTodoItem(id, property);
   }
 
+  public createNewTodoItem(todo: ITodoItem): Observable<ITodoItem> {
+    return this.apiService.addNewTodoItem(0, todo).pipe(tap(() => this.addTodoItem(todo)));
+  }
+
   public todoAction(action: TodoActionType, todo?: ITodoItem): void {
     switch (action) {
       case ETodoAction.ADD:
-        this.addTodoItem();
+        this.addTodoItem(todo);
         break;
       case ETodoAction.EDIT:
         this.editTodo(todo);
@@ -64,13 +72,12 @@ export class TodoListService {
     }
   }
 
-  private getTodos(): ITodoItem[] {
+  public getTodos(): ITodoItem[] {
     return this.todosSub.getValue();
   }
 
-  private addTodoItem(): void {
-    const todoItem: ITodoItem = this.generateTodoItem();
-    const todos: ITodoItem[] = [todoItem, ...this.getTodos()];
+  private addTodoItem(todo: ITodoItem): void {
+    const todos: ITodoItem[] = [todo, ...this.getTodos()];
     this.todosSub.next(todos);
   }
 
@@ -88,9 +95,5 @@ export class TodoListService {
   private removeTodoItem(todoItem: ITodoItem): void {
     const updatedTodos: ITodoItem[] = this.getTodos().filter((todo) => todo.id !== todoItem.id);
     this.todosSub.next(updatedTodos);
-  }
-
-  private generateTodoItem(): ITodoItem {
-    return null;
   }
 }

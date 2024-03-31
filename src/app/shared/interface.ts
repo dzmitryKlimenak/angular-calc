@@ -33,3 +33,14 @@ export interface IUserCompanyData {
   catchPhrase: string;
   bs: string;
 }
+
+export interface ICreateTodoDialogData {
+  priorities: number[];
+  users: IUserData[];
+}
+
+export interface INotificationData {
+  type?: 'warning' | 'error' | 'info' | 'success';
+  title: string;
+  description?: string;
+}

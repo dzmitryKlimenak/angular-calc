@@ -19,6 +19,11 @@ export interface ITodoListFormGroup {
   user: FormControl<IUserData | null>;
   priority: FormControl<number | null>;
 }
+export interface ITodoNewItemFormGroup {
+  user: FormControl<IUserData | null>;
+  priority: FormControl<number | null>;
+  title: FormControl<string | null>;
+}
 export type TodoPriorityType =
   | ETodoPriority.NONE
   | ETodoPriority.LOW

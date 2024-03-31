@@ -15,6 +15,8 @@ import { ITodoItem, IUserData } from '../../../shared/interface';
 import { UsersService } from '../../service/users.service';
 import { debounceTime, map, Observable, Subject, switchMap } from 'rxjs';
 import { UI_DELAY_TIME } from '../../../shared/constant';
+import { LoadingService } from '../../../shared/service/loading.service';
+import { NotificationService } from '../../../shared/component/notification/notification.service';
 
 @Component({
   selector: 'app-todo-list-item',
@@ -59,6 +61,8 @@ export class TodoListItemComponent implements OnInit {
     private usersService: UsersService,
     private fb: FormBuilder,
     private destroyRef: DestroyRef,
+    private loadingService: LoadingService,
+    private notifications: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -69,23 +73,32 @@ export class TodoListItemComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         debounceTime(UI_DELAY_TIME),
         switchMap((state) =>
-          this.todoService.updateTodoItem(this.todoItem.id, { completed: state }),
+          this.loadingService.showLoaderUntilCompleted(
+            this.todoService.updateTodoItem(this.todoItem.id, { completed: state }),
+          ),
         ),
       )
-      .subscribe(() =>
+      .subscribe(() => {
         this.todoService.todoAction(ETodoAction.EDIT, {
           ...this.todoItem,
           completed: !this.todoItem.completed,
-        }),
-      );
+        });
+      });
 
     this.onDeleteTodo
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         debounceTime(UI_DELAY_TIME),
-        switchMap(() => this.todoService.deleteTodoItem(this.todoItem.id)),
+        switchMap(() =>
+          this.loadingService.showLoaderUntilCompleted(
+            this.todoService.deleteTodoItem(this.todoItem.id),
+          ),
+        ),
       )
-      .subscribe(() => this.todoService.todoAction(ETodoAction.REMOVE, this.todoItem));
+      .subscribe(() => {
+        this.todoService.todoAction(ETodoAction.REMOVE, this.todoItem);
+        this.notifications.showNotification({ title: 'Todo removed' });
+      });
   }
 
   public saveTitleChanges(): void {
@@ -95,12 +108,13 @@ export class TodoListItemComponent implements OnInit {
       this.todoService
         .updateTodoItem(this.todoItem.id, { title: this.titleCtrl.value })
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(() =>
+        .subscribe(() => {
           this.todoService.todoAction(ETodoAction.EDIT, {
             ...this.todoItem,
             title: this.titleCtrl.value,
-          }),
-        );
+          });
+          this.notifications.showNotification({ title: 'Title updated successfully' });
+        });
     }
   }
 

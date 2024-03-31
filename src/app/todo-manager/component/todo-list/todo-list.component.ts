@@ -10,6 +10,9 @@ import { ETodoAction } from '../../interface/todo-manager.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UI_DELAY_TIME } from '../../../shared/constant';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateNewTodoDialogComponent } from '../create-new-todo-dialog/create-new-todo-dialog.component';
+import { NotificationService } from '../../../shared/component/notification/notification.service';
 
 @Component({
   selector: 'app-todo-list',
@@ -25,7 +28,7 @@ export class TodoListComponent implements OnInit {
 
   public filterFg: FormGroup<ITodoListFormGroup>;
 
-  public priorityOptions: number[] = [0, 1, 2, 3, 4];
+  public priorityOptions: number[] = this.todoService.getPriorityList();
 
   get userCtrl(): FormControl<IUserData> {
     return this.filterFg && this.filterFg.controls.user;
@@ -44,6 +47,8 @@ export class TodoListComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
+    private notifications: NotificationService,
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +91,7 @@ export class TodoListComponent implements OnInit {
           ...droppedItem,
           completed: !droppedItem.completed,
         });
+        this.notifications.showNotification({ title: 'Status updated successfully' });
       }
     }
   }
@@ -96,5 +102,14 @@ export class TodoListComponent implements OnInit {
 
   public userTrackFn(index: number, item: IUserData): number {
     return item.id;
+  }
+
+  public addTodo(): void {
+    this.dialog.open(CreateNewTodoDialogComponent, {
+      data: {
+        priorities: this.priorityOptions,
+        users: this.userOptions,
+      },
+    });
   }
 }

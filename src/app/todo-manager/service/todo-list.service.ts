@@ -43,10 +43,7 @@ export class TodoListService {
     return this.apiService.deleteTodoItem(id);
   }
 
-  public updateTodoItem(
-    id: number,
-    property: { [key: string]: boolean | string },
-  ): Observable<ITodoItem> {
+  public updateTodoItem(id: number, property: Partial<ITodoItem>): Observable<ITodoItem> {
     return this.apiService.patchTodoItem(id, property);
   }
 
@@ -75,6 +72,10 @@ export class TodoListService {
 
   public getTodos(): ITodoItem[] {
     return this.todosSub.getValue();
+  }
+
+  public getTodoById(id: number): ITodoItem {
+    return this.todosSub.getValue().find((todo) => todo.id === id);
   }
 
   private addTodoItem(todo: ITodoItem): void {

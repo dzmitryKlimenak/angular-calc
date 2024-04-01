@@ -24,6 +24,9 @@ export interface ITodoNewItemFormGroup {
   priority: FormControl<number | null>;
   title: FormControl<string | null>;
 }
+export interface ITodoEditItemFormGroup extends ITodoNewItemFormGroup {
+  state: FormControl<boolean | null>;
+}
 export type TodoPriorityType =
   | ETodoPriority.NONE
   | ETodoPriority.LOW

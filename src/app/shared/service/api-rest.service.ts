@@ -40,7 +40,7 @@ export class ApiRestService {
     );
   }
 
-  patchTodoItem(id: number, property: { [key: string]: boolean | string }): Observable<ITodoItem> {
+  patchTodoItem(id: number, property: Partial<ITodoItem>): Observable<ITodoItem> {
     const url: string = `${BASE_API_URL}/${API_URL.TODOS}/${id}`;
     const body: string = JSON.stringify(property);
     return this.httpClient.patch<ITodoItem>(url, body).pipe(

@@ -14,9 +14,10 @@ import { ETodoAction } from '../../interface/todo-manager.enum';
 import { ITodoItem, IUserData } from '../../../shared/interface';
 import { UsersService } from '../../service/users.service';
 import { debounceTime, map, Observable, Subject, switchMap } from 'rxjs';
-import { UI_DELAY_TIME } from '../../../shared/constant';
+import { TODO_TITLE_MAX_LENGTH, UI_DELAY_TIME } from '../../../shared/constant';
 import { LoadingService } from '../../../shared/service/loading.service';
 import { NotificationService } from '../../../shared/component/notification/notification.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-todo-list-item',
@@ -31,6 +32,10 @@ export class TodoListItemComponent implements OnInit {
   user$: Observable<IUserData> = this.usersService.users$.pipe(
     map((users) => users.find((user) => user.id === this.todoItem.userId)),
   );
+
+  public isAuth$: Observable<boolean> = this.authService.isAuthenticated$;
+
+  public readonly titleMaxLength: number = TODO_TITLE_MAX_LENGTH;
 
   public todoFg: FormGroup<ITodoItemFormGroup>;
 
@@ -63,6 +68,7 @@ export class TodoListItemComponent implements OnInit {
     private destroyRef: DestroyRef,
     private loadingService: LoadingService,
     private notifications: NotificationService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -123,7 +129,7 @@ export class TodoListItemComponent implements OnInit {
       state: this.fb.control<boolean>(this.todoItem.completed),
       title: this.fb.control<string>(this.todoItem.title, [
         Validators.required,
-        Validators.maxLength(20),
+        Validators.maxLength(TODO_TITLE_MAX_LENGTH),
       ]),
     });
   }

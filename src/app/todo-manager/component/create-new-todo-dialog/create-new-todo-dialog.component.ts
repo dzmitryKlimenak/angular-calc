@@ -6,7 +6,7 @@ import { ITodoNewItemFormGroup } from '../../interface/todo-manager.interface';
 import { TodoListService } from '../../service/todo-list.service';
 import { debounceTime, filter, map, Observable, Subject, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { UI_DELAY_TIME } from '../../../shared/constant';
+import { TODO_TITLE_MAX_LENGTH, UI_DELAY_TIME } from '../../../shared/constant';
 import { getRandomIntInclusive } from '../../../shared/function/util';
 import { LoadingService } from '../../../shared/service/loading.service';
 import { NotificationService } from '../../../shared/component/notification/notification.service';
@@ -17,6 +17,8 @@ import { NotificationService } from '../../../shared/component/notification/noti
   styleUrls: ['./create-new-todo-dialog.component.scss'],
 })
 export class CreateNewTodoDialogComponent implements OnInit {
+  protected readonly titleMaxLength = TODO_TITLE_MAX_LENGTH;
+
   public todoFg: FormGroup<ITodoNewItemFormGroup>;
 
   onCreateTodo: Subject<void> = new Subject();
@@ -51,7 +53,10 @@ export class CreateNewTodoDialogComponent implements OnInit {
     this.todoFg = this.fb.group({
       user: this.fb.control(null, Validators.required),
       priority: this.fb.control(null, Validators.required),
-      title: this.fb.control(null, Validators.required),
+      title: this.fb.control(null, [
+        Validators.required,
+        Validators.maxLength(TODO_TITLE_MAX_LENGTH),
+      ]),
     });
   }
 

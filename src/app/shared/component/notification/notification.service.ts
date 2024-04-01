@@ -14,7 +14,7 @@ export class NotificationService {
 
   constructor() {}
 
-  public showNotification(data: INotificationData) {
+  public showNotification(data: INotificationData): void {
     this.notificationSub.next(data);
   }
 }

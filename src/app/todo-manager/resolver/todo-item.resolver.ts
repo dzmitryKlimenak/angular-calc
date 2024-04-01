@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { ITodoItem } from '../../shared/interface';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TodoListService } from '../service/todo-list.service';
 import { LoadingService } from '../../shared/service/loading.service';
 
@@ -11,6 +11,10 @@ export class TodoItemResolver implements Resolve<ITodoItem> {
 
   resolve(route: ActivatedRouteSnapshot): Observable<ITodoItem> {
     const todoId: string = route.params['id'];
-    return this.loadingService.showLoaderUntilCompleted(this.todoService.fetchTodoItem(+todoId));
+    if (!this.todoService.getTodoById(+todoId)) {
+      return this.loadingService.showLoaderUntilCompleted(this.todoService.fetchTodoItem(+todoId));
+    } else {
+      return of(this.todoService.getTodoById(+todoId));
+    }
   }
 }

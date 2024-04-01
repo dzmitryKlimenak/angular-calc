@@ -13,6 +13,11 @@ import { LoadingModule } from './shared/component/loading/loading.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotificationModule } from './shared/component/notification/notification.module';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [AppComponent, BaseLayoutComponent, NotFoundComponent],
@@ -27,6 +32,11 @@ import { NotificationModule } from './shared/component/notification/notification
     HttpClientModule,
     BrowserAnimationsModule,
     NotificationModule,
+    MatSidenavModule,
+    MatInputModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatRippleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,5 @@
 import { Resolve } from '@angular/router';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { ITodoItem, IUserData } from '../../shared/interface';
 import { TodoListService } from '../service/todo-list.service';
 import { LoadingService } from '../../shared/service/loading.service';
@@ -8,6 +8,8 @@ import { UsersService } from '../service/users.service';
 
 @Injectable()
 export class TodoListResolver implements Resolve<{ todos: ITodoItem[]; users: IUserData[] }> {
+  private requested = false;
+
   constructor(
     private todoService: TodoListService,
     private usersService: UsersService,
@@ -15,8 +17,16 @@ export class TodoListResolver implements Resolve<{ todos: ITodoItem[]; users: IU
   ) {}
 
   resolve(): Observable<{ todos: ITodoItem[]; users: IUserData[] }> {
-    return this.loadingService.showLoaderUntilCompleted(
-      forkJoin({ todos: this.todoService.fetchTodoList(), users: this.usersService.fetchUsers() }),
-    );
+    if (!this.requested) {
+      this.requested = true;
+
+      return this.loadingService.showLoaderUntilCompleted(
+        forkJoin({
+          todos: this.todoService.fetchTodoList(),
+          users: this.usersService.fetchUsers(),
+        }),
+      );
+    }
+    return of({ todos: [], users: [] });
   }
 }

@@ -54,6 +54,10 @@ export class TodoListComponent implements OnInit {
   ngOnInit(): void {
     this.initForm();
 
+    this.activatedRoute.snapshot.data['0'].todos.forEach((todo: ITodoItem) =>
+      this.todoService.todoAction(ETodoAction.ADD, todo),
+    );
+
     this.filterFg.valueChanges
       .pipe(
         takeUntilDestroyed(this.destroyRef),

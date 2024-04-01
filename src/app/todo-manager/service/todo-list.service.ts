@@ -32,7 +32,6 @@ export class TodoListService {
           };
         });
       }),
-      tap((todos: ITodoItem[]) => this.todosSub.next(todos)),
     );
   }
 
@@ -52,7 +51,9 @@ export class TodoListService {
   }
 
   public createNewTodoItem(todo: ITodoItem): Observable<ITodoItem> {
-    return this.apiService.addNewTodoItem(0, todo).pipe(tap(() => this.addTodoItem(todo)));
+    return this.apiService
+      .addNewTodoItem(0, todo)
+      .pipe(tap(() => this.todoAction(ETodoAction.ADD, todo)));
   }
 
   public todoAction(action: TodoActionType, todo?: ITodoItem): void {

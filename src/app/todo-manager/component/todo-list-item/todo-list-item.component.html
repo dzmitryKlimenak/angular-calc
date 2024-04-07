@@ -3,27 +3,32 @@
      class="flex justify-between items-center flex-wrap p-2 border-solid border rounded cursor-grab">
   <ng-container *ngIf="user$ | async as user">
     <div class="my-2 flex w-full justify-between items-center hover:cursor-pointer">
-      <a [routerLink]="[todoItem.id]"
-        class="flex gap-x-4 items-center">
+      <a [routerLink]="['/users', user.id]"
+        class="flex gap-x-0 items-center">
         <button mat-icon-button
         class="scale-75">
           <fa-icon
             [icon]="faUser"></fa-icon>
         </button>
         <h2 class="mb-0">{{ user.name }}</h2>
-        <button mat-icon-button
-                class="scale-75"
-                *ngIf="isAuth$ | async">
-          <fa-icon
-            [icon]="faExternalLinkAlt"></fa-icon>
-        </button>
+
       </a>
-      <button mat-icon-button
-              *ngIf="isAuth$ | async"
-              (click)="onDeleteTodo.next()">
-        <fa-icon
-          [icon]="faWindowClose"></fa-icon>
-      </button>
+      <div class="flex items-center justify-end space-x-0">
+        <a [routerLink]="[todoItem.id]">
+          <button mat-icon-button
+                  class="scale-75"
+                  *ngIf="isAuth$ | async">
+            <fa-icon
+              [icon]="faExternalLinkAlt"></fa-icon>
+          </button>
+        </a>
+        <button mat-icon-button
+                *ngIf="isAuth$ | async"
+                (click)="onDeleteTodo.next()">
+          <fa-icon
+            [icon]="faWindowClose"></fa-icon>
+        </button>
+      </div>
     </div>
   </ng-container>
   <div class="flex items-center w-full justify-center">

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITodoItem, IUserData } from '../../shared/interface';
+import { ITodoItem, IUserData } from '../interface';
 
 @Pipe({
   name: 'todoListFilter',
@@ -7,7 +7,7 @@ import { ITodoItem, IUserData } from '../../shared/interface';
 export class TodoListFilterPipe implements PipeTransform {
   transform(
     value: ITodoItem[],
-    filter: Partial<{ user: IUserData; priority: number; state: boolean }>,
+    filter: Partial<{ user: IUserData; priority?: number; state?: boolean }>,
   ): ITodoItem[] {
     return value.filter((todo: ITodoItem) => {
       const userMatch =

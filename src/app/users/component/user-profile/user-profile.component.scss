@@ -19,3 +19,12 @@ mat-icon {
 mat-chip {
   margin: 5px;
 }
+
+.active {
+  @apply bg-green-200 border-green-400;
+}
+
+.completed {
+  @apply bg-red-200 border-red-400;
+}
+

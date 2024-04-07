@@ -17,14 +17,14 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
-import { TodoListFilterPipe } from './pipe/todo-list-filter.pipe';
+import { TodoListFilterPipe } from '../shared/pipe/todo-list-filter.pipe';
 import {
   CdkFixedSizeVirtualScroll,
   CdkVirtualForOf,
   CdkVirtualScrollViewport,
 } from '@angular/cdk/scrolling';
 import { CdkDrag, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
-import { TodoPriorityLabelPipe } from './pipe/todo-priority-label.pipe';
+import { TodoPriorityLabelPipe } from '../shared/pipe/todo-priority-label.pipe';
 import { CreateNewTodoDialogComponent } from './component/create-new-todo-dialog/create-new-todo-dialog.component';
 import { DialogModule } from '../shared/component/dialog/dialog.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -64,5 +64,6 @@ import { EditTodoDialogComponent } from './component/edit-todo-dialog/edit-todo-
     MatTooltipModule,
   ],
   providers: [AuthGuard, TodoItemResolver],
+  exports: [TodoListFilterPipe, TodoStateDirective, TodoPriorityLabelPipe],
 })
 export class TodoManagerModule {}

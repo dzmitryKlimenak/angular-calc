@@ -15,7 +15,7 @@
 
   .column {
     &__wrapper {
-      @apply p-4 mr-1 border-solid border rounded border-gray-200 dark:border-gray-700;
+      @apply p-4 mr-1 border-solid border rounded border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900;
     }
 
     &__title {

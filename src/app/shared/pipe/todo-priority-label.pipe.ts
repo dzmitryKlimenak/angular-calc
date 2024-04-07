@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { TodoPriorityType } from '../interface/todo-manager.interface';
-import { ETodoPriority } from '../interface/todo-manager.enum';
+import { TodoPriorityType } from '../../todo-manager/interface/todo-manager.interface';
+import { ETodoPriority } from '../../todo-manager/interface/todo-manager.enum';
 
 @Pipe({
   name: 'todoPriorityLabel',

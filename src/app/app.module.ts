@@ -27,6 +27,7 @@ import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
 import { MatChipsModule } from '@angular/material/chips';
 import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { TodoManagerModule } from './todo-manager/todo-manager.module';
+import { UsersModule } from './users/users.module';
 
 @NgModule({
   declarations: [AppComponent, BaseLayoutComponent, NotFoundComponent, UserProfileComponent],
@@ -54,6 +55,7 @@ import { TodoManagerModule } from './todo-manager/todo-manager.module';
     CdkDropList,
     CdkDrag,
     TodoManagerModule,
+    UsersModule,
   ],
   providers: [AppDataResolver],
   bootstrap: [AppComponent],

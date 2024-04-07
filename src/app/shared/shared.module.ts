@@ -7,9 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LoadingModule } from './component/loading/loading.module';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { TaskProgressComponent } from './component/task-progress/task-progress.component';
 
 @NgModule({
-  declarations: [HeaderComponent],
+  declarations: [HeaderComponent, TaskProgressComponent],
   imports: [
     CommonModule,
     AuthModule,
@@ -19,6 +21,7 @@ import { LoadingModule } from './component/loading/loading.module';
     RouterLink,
     RouterLinkActive,
     LoadingModule,
+    MatProgressBarModule,
   ],
   exports: [HeaderComponent],
 })

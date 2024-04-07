@@ -3,6 +3,7 @@
     class="flex text-gray-400 dark:text-orange-300 text-2xl hover:cursor-pointer"
     (click)="goBack()"
     [icon]="faArrowLeft"></fa-icon>
+  <app-task-progress class="mt-1"></app-task-progress>
   <app-auth></app-auth>
 </header>
 <ng-container *ngIf="loading$ | async">

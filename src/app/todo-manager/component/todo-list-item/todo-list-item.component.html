@@ -1,43 +1,65 @@
 <div [appTodoState]="todoItem.completed"
      [formGroup]="todoFg"
-     class="flex justify-between items-center flex-wrap p-2 border-solid border rounded-s">
+     class="flex justify-between items-center flex-wrap p-2 border-solid border rounded cursor-grab">
   <ng-container *ngIf="user$ | async as user">
     <div class="my-2 flex w-full justify-between items-center hover:cursor-pointer">
-      <a [routerLink]="[todoItem.id]"
-        class="flex gap-x-4">
-        <fa-icon
-          [icon]="faUser"></fa-icon>
-        <span>{{ user.name }}</span>
-        <fa-icon
-          [icon]="faExternalLinkAlt"></fa-icon>
+      <a [routerLink]="['/users', user.id]"
+        class="flex gap-x-0 items-center">
+        <button mat-icon-button
+        class="scale-75">
+          <fa-icon
+            [icon]="faUser"></fa-icon>
+        </button>
+        <h2 class="mb-0">{{ user.name }}</h2>
+
       </a>
-      <fa-icon
-        (click)="onDeleteTodo.next()"
-        [icon]="faWindowClose"></fa-icon>
+      <div class="flex items-center justify-end space-x-0">
+        <a [routerLink]="[todoItem.id]">
+          <button mat-icon-button
+                  class="scale-75"
+                  *ngIf="isAuth$ | async">
+            <fa-icon
+              [icon]="faExternalLinkAlt"></fa-icon>
+          </button>
+        </a>
+        <button mat-icon-button
+                *ngIf="isAuth$ | async"
+                (click)="onDeleteTodo.next()">
+          <fa-icon
+            [icon]="faWindowClose"></fa-icon>
+        </button>
+      </div>
     </div>
   </ng-container>
-  <div class="flex w-full justify-between" *ngIf="todoFg">
-    <div class="flex">
-      <ng-container *ngIf="isEditMode; else TitleTemplate">
-        <input
-          class="border-solid border rounded-lg px-2 py-0"
-          [class.text-red-900]="titleCtrl.invalid"
-          formControlName="title"
-          type="text"
-          placeholder="Title">
+  <div class="flex items-center w-full justify-center">
+    <ng-container *ngIf="isEditMode; else TitleTemplate">
+      <div class="flex justify-start grow items-center gap-x-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Title</mat-label>
+          <input matInput formControlName="title" />
+          <mat-hint align="end">{{titleCtrl.value?.length || 0}}/{{ titleMaxLength }}</mat-hint>
+        </mat-form-field>
+      </div>
+      <button mat-icon-button
+              class="mx-2 scale-75"
+              (click)="saveTitleChanges()">
         <fa-icon
-          class="mx-2 hover:cursor-pointer"
-          (click)="saveTitleChanges()"
           [icon]="faSave"></fa-icon>
-      </ng-container>
-      <ng-template #TitleTemplate>
-        <h3>{{ todoItem.title }}</h3>
+      </button>
+    </ng-container>
+    <ng-template #TitleTemplate>
+      <h3 class="truncate max-w-full mb-0 leading-normal">{{ todoItem.title | titlecase }}</h3>
+      <button mat-icon-button
+              class="mx-2 scale-75"
+              *ngIf="isAuth$ | async"
+              (click)="toggleEditMode(true)">
         <fa-icon
-          class="mx-2 hover:cursor-pointer"
-          (click)="toggleEditMode(true)"
           [icon]="faPencil"></fa-icon>
-      </ng-template>
-    </div>
+      </button>
+    </ng-template>
+  </div>
+  <div class="flex w-full justify-between items-center" *ngIf="todoFg">
+    <div>Priority: {{todoItem.priority | todoPriorityLabel}}</div>
     <div class="flex items-center gap-x-4 hover:cursor-pointer">
       <mat-checkbox
         #state

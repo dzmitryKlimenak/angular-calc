@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, BASE_API_URL } from '../../../config';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ITodoItem, IUserData } from '../interface';
 
 @Injectable({
@@ -13,6 +13,12 @@ export class ApiRestService {
   fetchTodoList(): Observable<ITodoItem[]> {
     const url: string = `${BASE_API_URL}/${API_URL.TODOS}`;
     return this.httpClient.get<ITodoItem[]>(url).pipe(
+      map((todos) => {
+        return todos.reduce((arr, todo) => {
+          const count = arr.filter((item) => item.userId === todo.userId).length;
+          return count > 4 ? arr : [...arr, todo];
+        }, [] as ITodoItem[]);
+      }),
       catchError((err) => {
         console.error(err);
         return of(null);
@@ -40,7 +46,7 @@ export class ApiRestService {
     );
   }
 
-  patchTodoItem(id: number, property: { [key: string]: boolean | string }): Observable<ITodoItem> {
+  patchTodoItem(id: number, property: Partial<ITodoItem>): Observable<ITodoItem> {
     const url: string = `${BASE_API_URL}/${API_URL.TODOS}/${id}`;
     const body: string = JSON.stringify(property);
     return this.httpClient.patch<ITodoItem>(url, body).pipe(
@@ -51,9 +57,30 @@ export class ApiRestService {
     );
   }
 
+  addNewTodoItem(id: number, todo: ITodoItem): Observable<ITodoItem> {
+    const url: string = `${BASE_API_URL}/${API_URL.TODOS}/${id}`;
+    const body: string = JSON.stringify(todo);
+    return this.httpClient.put<ITodoItem>(url, body).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      }),
+    );
+  }
+
   fetchUsers(): Observable<IUserData[]> {
     const url: string = `${BASE_API_URL}/${API_URL.USERS}`;
     return this.httpClient.get<IUserData[]>(url).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      }),
+    );
+  }
+
+  fetchUserProfile(uuid: number): Observable<IUserData> {
+    const url: string = `${BASE_API_URL}/${API_URL.USERS}/${uuid}`;
+    return this.httpClient.get<IUserData>(url).pipe(
       catchError((err) => {
         console.error(err);
         return of(null);

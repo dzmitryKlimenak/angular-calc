@@ -1,10 +1,6 @@
 import { FormControl } from '@angular/forms';
-import { ETodoAction } from './todo-manager.enum';
+import { ETodoAction, ETodoPriority } from './todo-manager.enum';
 import { IUserData } from '../../shared/interface';
-
-export interface ITodoItemFilter {
-  [key: string]: boolean | string | number;
-}
 
 export type TodoActionType =
   | ETodoAction.ADD
@@ -21,5 +17,19 @@ export interface ITodoItemFormGroup {
 }
 export interface ITodoListFormGroup {
   user: FormControl<IUserData | null>;
+  priority: FormControl<number | null>;
+}
+export interface ITodoNewItemFormGroup {
+  user: FormControl<IUserData | null>;
+  priority: FormControl<number | null>;
+  title: FormControl<string | null>;
+}
+export interface ITodoEditItemFormGroup extends ITodoNewItemFormGroup {
   state: FormControl<boolean | null>;
 }
+export type TodoPriorityType =
+  | ETodoPriority.NONE
+  | ETodoPriority.LOW
+  | ETodoPriority.MEDIUM
+  | ETodoPriority.HIGH
+  | ETodoPriority.CRITICAL;

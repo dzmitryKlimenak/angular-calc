@@ -2,5 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "assets/scss/mat-select";
+@import "assets/scss/fa-icon";
+@import "assets/scss/mat-snack-bar";
+@import "assets/scss/mat-sidenav";
+@import "assets/scss/mat-progress";
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

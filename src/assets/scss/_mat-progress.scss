@@ -1,0 +1,19 @@
+.mat-mdc-progress-bar .mdc-linear-progress {
+
+  &__bar-inner {
+    @apply border-orange-500;
+    .dark & {
+      @apply border-green-700;
+    }
+
+  }
+
+  &__buffer {
+   &-bar {
+     @apply bg-orange-200;
+     .dark & {
+       @apply bg-green-200;
+     }
+   }
+  }
+}

@@ -1,47 +1,67 @@
-<div class="flex-col">
-  <div class="flex items-center gap-x-4 text-gray-500 dark:text-green-200"
-       *ngIf="formGroup"
-       [formGroup]="formGroup">
-    <span>Filter by:</span>
-    <mat-form-field appearance="fill">
-      <mat-label>Assign</mat-label>
-      <mat-select [formControl]="userCtrl">
-        <mat-option>--</mat-option>
-        <mat-option *ngFor="let user of userOptions" [value]="user">
-          {{user.name}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Status</mat-label>
-      <mat-select [formControl]="stateCtrl">
-        <mat-option>--</mat-option>
-        <mat-option *ngFor="let state of todoStateOptions" [value]="state.value">
-          {{state.label}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<div class="todo-list">
+  <div class="todo-list__header">
+    <button mat-raised-button (click)="addTodo()">Add Todo</button>
+    <div class="todo-list__filters"
+         [formGroup]="filterFg">
+      <span>Filter by:</span>
+      <mat-form-field appearance="fill">
+        <mat-label>Assign</mat-label>
+        <mat-select [formControl]="userCtrl">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let user of userOptions; trackBy: userTrackFn" [value]="user">
+            {{user.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Priority</mat-label>
+        <mat-select [formControl]="priorityCtrl">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let priority of priorityOptions" [value]="priority">
+            {{priority | todoPriorityLabel}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
   </div>
-  <ng-container *ngIf="todoListLength$ | async; else EmptyStateTemplate">
-    <cdk-virtual-scroll-viewport itemSize="1" class="h-[60vh]">
-      <ng-container *cdkVirtualFor="let todo of todoList$ | async | todoListFilter: filterValues">
-        <app-todo-list-item [todoItem]="todo"></app-todo-list-item>
-      </ng-container>
-    </cdk-virtual-scroll-viewport>
+  <ng-container *ngIf="todoListLength$ | async as length; else EmptyStateTemplate">
+    <div cdkDropListGroup class="todo-list__body">
+      <div *ngIf="(todoList$ | async | todoListFilter: {user: userCtrl.value, priority: priorityCtrl.value, state: false}) as inProgressTodos"
+           class="column__wrapper">
+        <div class="column__title">In progress: ({{inProgressTodos.length}}/{{length}})</div>
+        <div
+          cdkDropList
+          [cdkDropListData]="inProgressTodos"
+          (cdkDropListDropped)="drop($event)">
+          <div class="column__items" *ngIf="inProgressTodos.length; else EmptyStateTemplate">
+            <app-todo-list-item
+              cdkDrag
+              [cdkDragData]="todo"
+              *ngFor="let todo of inProgressTodos; trackBy: todoTrackFn"
+              [todoItem]="todo"></app-todo-list-item>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="(todoList$ | async | todoListFilter: {user: userCtrl.value, priority: priorityCtrl.value, state: true}) as completedTodos"
+           class="column__wrapper">
+        <div class="column__title">Done: ({{completedTodos.length}}/{{length}})</div>
+        <div
+          cdkDropList
+          [cdkDropListData]="completedTodos"
+          (cdkDropListDropped)="drop($event)">
+          <div class="column__items" *ngIf="completedTodos.length; else EmptyStateTemplate">
+            <app-todo-list-item
+              cdkDrag
+              [cdkDragData]="todo"
+              *ngFor="let todo of completedTodos; trackBy: todoTrackFn"
+              [todoItem]="todo"></app-todo-list-item>
+          </div>
+        </div>
+      </div>
+    </div>
   </ng-container>
   <ng-template #EmptyStateTemplate>
-    <h2 class="text-center font-bold text-xl text-gray-500 dark:text-green-200">Empty Todo List</h2>
+    <h2 class="empty__title">Empty List</h2>
   </ng-template>
-</div>
-<mat-divider class="my-4 text-gray-500 dark:text-green-200"></mat-divider>
-<div>
-  <button
-    mat-flat-button
-    *ngIf="(todoListLength$ | async) < 5"
-    class="p-1 text-sm border border-green-600 border-solid text-white bg-green-500 hover:bg-green-600 mr-2"
-    (click)="addItem()">Add one more task</button>
-  <button mat-flat-button
-          class="p-1 text-sm border border-red-600 border-solid text-white bg-red-500 hover:bg-red-600"
-          (click)="cleanTodoList()">Delete All</button>
 </div>
 

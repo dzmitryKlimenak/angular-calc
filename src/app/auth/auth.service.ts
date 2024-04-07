@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { IAuthState } from './auth.interface';
 import { EAuthState } from './auth.enum';
 
@@ -9,6 +9,11 @@ export class AuthService {
 
   private isAuthenticatedSub: BehaviorSubject<IAuthState> = new BehaviorSubject<IAuthState>(
     EAuthState.NOT_AUTHORISED,
+  );
+
+  isAuthenticated$: Observable<boolean> = this.isAuthenticatedSub.asObservable().pipe(
+    map((isAuth) => isAuth === EAuthState.AUTHORISED),
+    shareReplay({ bufferSize: 1, refCount: true }),
   );
 
   constructor() {

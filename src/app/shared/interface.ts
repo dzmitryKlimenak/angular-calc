@@ -3,6 +3,7 @@ export interface ITodoItem {
   id: number;
   title: string;
   completed: boolean;
+  priority: number;
 }
 
 export interface IUserData {
@@ -31,4 +32,15 @@ export interface IUserCompanyData {
   name: string;
   catchPhrase: string;
   bs: string;
+}
+
+export interface ICreateTodoDialogData {
+  priorities: number[];
+  users: IUserData[];
+}
+
+export interface INotificationData {
+  type?: 'warning' | 'error' | 'info' | 'success';
+  title: string;
+  description?: string;
 }

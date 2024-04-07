@@ -12,9 +12,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ETodoAction } from '../../interface/todo-manager.enum';
 import { ITodoItem, IUserData } from '../../../shared/interface';
-import { UsersService } from '../../service/users.service';
+import { UsersService } from '../../../users/users.service';
 import { debounceTime, map, Observable, Subject, switchMap } from 'rxjs';
-import { UI_DELAY_TIME } from '../../../shared/constant';
+import { TODO_TITLE_MAX_LENGTH, UI_DELAY_TIME } from '../../../shared/constant';
+import { LoadingService } from '../../../shared/service/loading.service';
+import { NotificationService } from '../../../shared/component/notification/notification.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-todo-list-item',
@@ -29,6 +32,10 @@ export class TodoListItemComponent implements OnInit {
   user$: Observable<IUserData> = this.usersService.users$.pipe(
     map((users) => users.find((user) => user.id === this.todoItem.userId)),
   );
+
+  public isAuth$: Observable<boolean> = this.authService.isAuthenticated$;
+
+  public readonly titleMaxLength: number = TODO_TITLE_MAX_LENGTH;
 
   public todoFg: FormGroup<ITodoItemFormGroup>;
 
@@ -59,6 +66,9 @@ export class TodoListItemComponent implements OnInit {
     private usersService: UsersService,
     private fb: FormBuilder,
     private destroyRef: DestroyRef,
+    private loadingService: LoadingService,
+    private notifications: NotificationService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -69,23 +79,32 @@ export class TodoListItemComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         debounceTime(UI_DELAY_TIME),
         switchMap((state) =>
-          this.todoService.updateTodoItem(this.todoItem.id, { completed: state }),
+          this.loadingService.showLoaderUntilCompleted(
+            this.todoService.updateTodoItem(this.todoItem.id, { completed: state }),
+          ),
         ),
       )
-      .subscribe((todo) =>
+      .subscribe(() => {
         this.todoService.todoAction(ETodoAction.EDIT, {
-          ...todo,
+          ...this.todoItem,
           completed: !this.todoItem.completed,
-        }),
-      );
+        });
+      });
 
     this.onDeleteTodo
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         debounceTime(UI_DELAY_TIME),
-        switchMap(() => this.todoService.deleteTodoItem(this.todoItem.id)),
+        switchMap(() =>
+          this.loadingService.showLoaderUntilCompleted(
+            this.todoService.deleteTodoItem(this.todoItem.id),
+          ),
+        ),
       )
-      .subscribe(() => this.todoService.todoAction(ETodoAction.REMOVE, this.todoItem));
+      .subscribe(() => {
+        this.todoService.todoAction(ETodoAction.REMOVE, this.todoItem);
+        this.notifications.showNotification({ title: 'Todo removed' });
+      });
   }
 
   public saveTitleChanges(): void {
@@ -94,12 +113,14 @@ export class TodoListItemComponent implements OnInit {
       this.toggleEditMode(false);
       this.todoService
         .updateTodoItem(this.todoItem.id, { title: this.titleCtrl.value })
-        .subscribe(() =>
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe(() => {
           this.todoService.todoAction(ETodoAction.EDIT, {
             ...this.todoItem,
             title: this.titleCtrl.value,
-          }),
-        );
+          });
+          this.notifications.showNotification({ title: 'Title updated successfully' });
+        });
     }
   }
 
@@ -108,7 +129,7 @@ export class TodoListItemComponent implements OnInit {
       state: this.fb.control<boolean>(this.todoItem.completed),
       title: this.fb.control<string>(this.todoItem.title, [
         Validators.required,
-        Validators.maxLength(20),
+        Validators.maxLength(TODO_TITLE_MAX_LENGTH),
       ]),
     });
   }

@@ -1,0 +1,30 @@
+.user-avatar {
+  background-image: url('https://source.unsplash.com/random/100x100');
+  background-size: cover;
+}
+
+mat-card-title, mat-card-subtitle {
+  @apply ml-5;
+}
+
+mat-icon {
+  vertical-align: bottom;
+  margin-right: 5px;
+}
+
+.chip-container {
+  margin-top: 20px;
+}
+
+mat-chip {
+  margin: 5px;
+}
+
+.active {
+  @apply bg-green-200 border-green-400;
+}
+
+.completed {
+  @apply bg-red-200 border-red-400;
+}
+

@@ -1,0 +1,45 @@
+<app-dialog [dialogTitle]="'Create Todo'" [dialogWidth]="600" #dialogComponent>
+  <ng-container content>
+    <div [formGroup]="todoFg" class="flex flex-col gap-y-8">
+      <div class="flex justify-start items-center gap-x-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Title</mat-label>
+          <input matInput #inputTitle formControlName="title" />
+          <mat-hint align="end">{{inputTitle.value?.length || 0}}/{{ titleMaxLength }}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-start items-center gap-x-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Assign</mat-label>
+          <mat-select formControlName="user">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let user of data.users" [value]="user">
+              {{user.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-start items-center gap-x-4">
+        <mat-form-field appearance="fill" class="w-full">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let priority of data.priorities" [value]="priority">
+              {{priority | todoPriorityLabel}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container actions>
+    <div class="flex justify-center gap-x-6">
+      <button mat-raised-button
+              class="w-1/3"
+              color="primary"
+              [disabled]="todoFg.invalid"
+              (click)="onCreateTodo.next()">Create</button>
+      <button class="w-1/3" mat-raised-button color="accent" (click)="dialogComponent.close()">Cancel</button>
+    </div>
+  </ng-container>
+</app-dialog>

@@ -4,6 +4,10 @@
       .mdc-switch {
         @apply hidden;
       }
+
+      .mdc-label {
+        @apply p-0;
+      }
     }
   }
 }

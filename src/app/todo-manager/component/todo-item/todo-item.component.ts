@@ -9,7 +9,7 @@ import { ETodoAction } from '../../interface/todo-manager.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatDialog } from '@angular/material/dialog';
 import { EditTodoDialogComponent } from '../edit-todo-dialog/edit-todo-dialog.component';
-import { UsersService } from '../../service/users.service';
+import { UsersService } from '../../../users/users.service';
 import { tap } from 'rxjs/operators';
 
 @Component({

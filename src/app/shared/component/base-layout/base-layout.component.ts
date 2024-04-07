@@ -4,6 +4,7 @@ import {
   faCalculator,
   faHome,
   faTasks,
+  faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { faArrowCircleRight } from '@fortawesome/free-solid-svg-icons/faArrowCircleRight';
 
@@ -22,4 +23,6 @@ export class BaseLayoutComponent {
   protected readonly faArrowCircleRight = faArrowCircleRight;
 
   protected readonly faArrowCircleLeft = faArrowCircleLeft;
+
+  protected readonly faUsers = faUsers;
 }

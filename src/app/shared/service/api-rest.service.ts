@@ -71,4 +71,14 @@ export class ApiRestService {
       }),
     );
   }
+
+  fetchUserProfile(uuid: number): Observable<IUserData> {
+    const url: string = `${BASE_API_URL}/${API_URL.USERS}/${uuid}`;
+    return this.httpClient.get<IUserData>(url).pipe(
+      catchError((err) => {
+        console.error(err);
+        return of(null);
+      }),
+    );
+  }
 }

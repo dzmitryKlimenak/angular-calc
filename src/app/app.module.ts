@@ -18,9 +18,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
+import { UserProfileComponent } from './users/component/user-profile/user-profile.component';
+import { AppDataResolver } from './shared/resolver/app-data.resolver';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+import { MatLegacyChipsModule } from '@angular/material/legacy-chips';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
-  declarations: [AppComponent, BaseLayoutComponent, NotFoundComponent],
+  declarations: [AppComponent, BaseLayoutComponent, NotFoundComponent, UserProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -37,8 +44,13 @@ import { MatRippleModule } from '@angular/material/core';
     MatSelectModule,
     MatButtonModule,
     MatRippleModule,
+    MatCardModule,
+    MatListModule,
+    MatIconModule,
+    MatLegacyChipsModule,
+    MatChipsModule,
   ],
-  providers: [],
+  providers: [AppDataResolver],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

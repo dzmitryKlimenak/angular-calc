@@ -11,10 +11,7 @@ import { TodoStateDirective } from './directive/todo-state.directive';
 import { TodoManagerRoutingModule } from './todo-manager-routing.module';
 import { TodoListItemComponent } from './component/todo-list-item/todo-list-item.component';
 import { TodoItemComponent } from './component/todo-item/todo-item.component';
-import { AuthGuard } from './guard/auth.guard';
-import { TodoListService } from './service/todo-list.service';
-import { UsersService } from './service/users.service';
-import { TodoListResolver } from './resolver/todo-list.resolver';
+import { AuthGuard } from '../shared/guard/auth.guard';
 import { TodoItemResolver } from './resolver/todo-item.resolver';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -66,6 +63,6 @@ import { EditTodoDialogComponent } from './component/edit-todo-dialog/edit-todo-
     DialogModule,
     MatTooltipModule,
   ],
-  providers: [AuthGuard, TodoListService, UsersService, TodoListResolver, TodoItemResolver],
+  providers: [AuthGuard, TodoItemResolver],
 })
 export class TodoManagerModule {}

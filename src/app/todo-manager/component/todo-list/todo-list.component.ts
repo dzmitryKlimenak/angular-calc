@@ -4,7 +4,7 @@ import { debounceTime, map, Observable, startWith } from 'rxjs';
 import { ITodoItem, IUserData } from '../../../shared/interface';
 import { ITodoListFormGroup } from '../../interface/todo-manager.interface';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { UsersService } from '../../service/users.service';
+import { UsersService } from '../../../users/users.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { ETodoAction } from '../../interface/todo-manager.enum';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -53,10 +53,6 @@ export class TodoListComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-
-    this.activatedRoute.snapshot.data['0'].todos.forEach((todo: ITodoItem) =>
-      this.todoService.todoAction(ETodoAction.ADD, todo),
-    );
 
     this.filterFg.valueChanges
       .pipe(

@@ -9,7 +9,7 @@ import { LoadingService } from '../../../shared/service/loading.service';
 import { NotificationService } from '../../../shared/component/notification/notification.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TODO_TITLE_MAX_LENGTH, UI_DELAY_TIME } from '../../../shared/constant';
-import { UsersService } from '../../service/users.service';
+import { UsersService } from '../../../users/users.service';
 import { ETodoAction } from '../../interface/todo-manager.enum';
 
 @Component({

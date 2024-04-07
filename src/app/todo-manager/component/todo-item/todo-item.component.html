@@ -3,7 +3,7 @@
     <div class="flex justify-between w-full items-center">
       <div class="flex justify-start gap-x-4 items-center w-full">
         <ng-container *ngIf="user$ | async as user">
-          <span class="text-2xl font-bold">{{ user.name }}</span>
+          <a [routerLink]="['/users', user.id]" class="text-2xl font-bold">{{ user.name }}</a>
           <span class="text-xl">{{ todo.completed ? 'Done' : 'In progress' }}</span>
           <span class="text-xl">{{ todo.priority | todoPriorityLabel }}</span>
         </ng-container>

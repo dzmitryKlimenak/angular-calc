@@ -7,7 +7,7 @@ import { ITodoItem } from '../../shared/interface';
 import { tap } from 'rxjs/operators';
 import { getRandomIntInclusive } from '../../shared/function/util';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TodoListService {
   private todosSub: BehaviorSubject<ITodoItem[]> = new BehaviorSubject<ITodoItem[]>([]);
 
@@ -32,6 +32,7 @@ export class TodoListService {
           };
         });
       }),
+      tap((todos: ITodoItem[]) => this.todosSub.next(todos)),
     );
   }
 

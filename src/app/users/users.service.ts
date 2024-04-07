@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
-import { IUserData } from '../../shared/interface';
+import { IUserData } from '../shared/interface';
 import { tap } from 'rxjs/operators';
-import { ApiRestService } from '../../shared/service/api-rest.service';
+import { ApiRestService } from '../shared/service/api-rest.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class UsersService {
   private usersSub: BehaviorSubject<IUserData[]> = new BehaviorSubject<IUserData[]>([]);
 
@@ -26,5 +26,9 @@ export class UsersService {
     return this.apiService
       .fetchUsers()
       .pipe(tap((users: IUserData[]) => this.usersSub.next(users)));
+  }
+
+  public fetchUser(id: number): Observable<IUserData> {
+    return this.apiService.fetchUserProfile(id);
   }
 }

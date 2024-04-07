@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ETodoAction } from '../../interface/todo-manager.enum';
 import { ITodoItem, IUserData } from '../../../shared/interface';
-import { UsersService } from '../../service/users.service';
+import { UsersService } from '../../../users/users.service';
 import { debounceTime, map, Observable, Subject, switchMap } from 'rxjs';
 import { TODO_TITLE_MAX_LENGTH, UI_DELAY_TIME } from '../../../shared/constant';
 import { LoadingService } from '../../../shared/service/loading.service';

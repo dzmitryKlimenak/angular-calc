@@ -26,7 +26,8 @@ export class UserTasksProgressComponent implements AfterViewInit {
     const labels = this.taskService.getPriorityList().map((el) => this.priorityPipe.transform(el));
     const chartData = this.taskService.getPriorityList().map((item) => {
       const todos = this.taskService.getTodos();
-      return todos.filter((todo) => todo.priority === item).length;
+      return todos.filter((todo) => todo.priority === item && todo.userId === this.userProfile.id)
+        .length;
     });
     const data = {
       labels: labels,

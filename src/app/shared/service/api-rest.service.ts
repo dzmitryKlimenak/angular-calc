@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URL, BASE_API_URL } from '../../../config';
-import { catchError, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ITodoItem, IUserData } from '../interface';
 
 @Injectable({
@@ -13,6 +13,12 @@ export class ApiRestService {
   fetchTodoList(): Observable<ITodoItem[]> {
     const url: string = `${BASE_API_URL}/${API_URL.TODOS}`;
     return this.httpClient.get<ITodoItem[]>(url).pipe(
+      map((todos) => {
+        return todos.reduce((arr, todo) => {
+          const count = arr.filter((item) => item.userId === todo.userId).length;
+          return count > 4 ? arr : [...arr, todo];
+        }, [] as ITodoItem[]);
+      }),
       catchError((err) => {
         console.error(err);
         return of(null);

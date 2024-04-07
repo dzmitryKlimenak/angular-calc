@@ -27,7 +27,10 @@
           </div>
         </mat-card-content>
       </mat-card>
-      <app-user-tasks-progress></app-user-tasks-progress>
+      <app-user-tasks-progress
+        [userProfile]="user"
+      ></app-user-tasks-progress
+        >
     </div>
     <ng-container *ngIf="todos$ | async | todoListFilter: {user: user} as todoList">
       <div class="w-1/3 px-6 py-10 mr-1 border-solid border rounded border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900" cdkDropList (cdkDropListDropped)="drop($event, todoList)">

@@ -1,0 +1,23 @@
+<ng-container *ngIf="todo$ | async as todo; else EmptyTodoTemplate">
+  <div class="flex flex-col justify-center items-center gap-y-10 p-8 border-solid border rounded w-2/3 mx-auto" [appTodoState]="todo.completed">
+    <div class="flex justify-between w-full items-center">
+      <div class="flex justify-start gap-x-4 items-center w-full">
+        <ng-container *ngIf="user$ | async as user">
+          <a [routerLink]="['/users', user.id]" class="text-2xl font-bold">{{ user.name }}</a>
+          <span class="text-xl">{{ todo.completed ? 'Done' : 'In progress' }}</span>
+          <span class="text-xl">{{ todo.priority | todoPriorityLabel }}</span>
+        </ng-container>
+      </div>
+      <div class="flex justify-end gap-x-4 items-center w-full">
+        <button mat-raised-button color="primary" (click)="editTodo(todo)">Edit</button>
+        <button mat-raised-button color="accent" (click)="deleteTodo(todo)">Delete</button>
+      </div>
+    </div>
+    <h4 class="text-2xl font-bold">{{ todo.title }}</h4>
+  </div>
+</ng-container>
+<ng-template #EmptyTodoTemplate>
+  <div class="flex flex-col justify-center items-center gap-y-10">
+    <h4 class="text-center text-8xl font-bold text-gray-500 dark:text-green-200">No todo found</h4>
+  </div>
+</ng-template>

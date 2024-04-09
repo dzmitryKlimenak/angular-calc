@@ -1,0 +1,12 @@
+<div class="w-1/5 mx-auto p-5 bg-black dark:bg-gray-100 rounded-xl">
+  <div class="my-4">
+    <app-calculator-screen></app-calculator-screen>
+  </div>
+  <div class="grid grid-cols-4 gap-1">
+    <div *ngFor="let button of buttons">
+      <app-calculator-button
+        [button]="button"
+      ></app-calculator-button>
+    </div>
+  </div>
+</div>

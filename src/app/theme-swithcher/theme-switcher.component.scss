@@ -1,0 +1,13 @@
+:host {
+  mat-slide-toggle {
+    ::ng-deep {
+      .mdc-switch {
+        @apply hidden;
+      }
+
+      .mdc-label {
+        @apply p-0;
+      }
+    }
+  }
+}

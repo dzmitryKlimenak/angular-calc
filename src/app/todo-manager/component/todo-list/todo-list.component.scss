@@ -1,0 +1,35 @@
+.todo-list {
+  @apply flex-col;
+
+  &__header {
+    @apply flex items-center justify-between gap-4;
+  }
+
+  &__filters {
+    @apply flex items-center gap-x-4 text-xl text-gray-500 dark:text-green-200 mb-4;
+  }
+
+  &__body {
+    @apply grid grid-cols-2 gap-4;
+  }
+
+  .column {
+    &__wrapper {
+      @apply p-4 mr-1 border-solid border rounded border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900;
+    }
+
+    &__title {
+      @apply text-xl text-gray-500 dark:text-green-200;
+    }
+
+    &__items {
+      @apply h-[65vh] overflow-y-auto;
+    }
+  }
+
+  .empty {
+    &__title {
+      @apply text-center font-bold text-xl text-gray-500 dark:text-green-200;
+    }
+  }
+}

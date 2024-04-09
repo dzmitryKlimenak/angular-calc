@@ -1,0 +1,32 @@
+.notification {
+  &__wrapper {
+    &.success {
+      .mdc-snackbar {
+        &__surface {
+          @apply bg-green-500 #{!important};
+        }
+      }
+    }
+    &.warning {
+      .mdc-snackbar {
+        &__surface {
+          @apply bg-yellow-500 #{!important};
+        }
+      }
+    }
+    &.error {
+      .mdc-snackbar {
+        &__surface {
+          @apply bg-red-500 #{!important};
+        }
+      }
+    }
+    &.info {
+      .mdc-snackbar {
+        &__surface {
+          @apply bg-blue-500 #{!important};
+        }
+      }
+    }
+  }
+}
